@@ -7,6 +7,11 @@ powershell Get-Module PowerView
 powershell Get-NetUser -Identity testuser
 ```
 
+## Running ActiveDirectory module
+```
+powershell import --> Select \ActiveDirectory\ActiveDirectory.psd1 file from https://github.com/samratashok/ADModule
+```
+
 ## Executing .NET binaries (i.e. SharpView and SharpHound)
 ```
 # Running SharpView in memory (.NET version of PowerView)
