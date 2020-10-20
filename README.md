@@ -23,3 +23,7 @@ execute-assembly C:\SharpView.exe ...
 # --windowsonly will 
 execute-assembly C:\SharpHound.exe --CollectionMethod All --Domain test.lab.local --Stealth --excludedomaincontrollers --windowsonly --OutputDirectory C:\users\testuser\appdata\local\temp\
 ```
+
+
+# References
+Cobalt Strike commands cheat-sheet: https://github.com/S1ckB0y1337/Cobalt-Strike-CheatSheet
