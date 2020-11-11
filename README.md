@@ -4,7 +4,7 @@
 ```
 # powershell-import --> Select PowerView.ps1 to import PS1 file in memory
 # powershell Get-Module PowerView
-# powershell Get-NetUser -Identity testuser
+# powershell Get-NetUser -Identity testuser -Domain test.lab.local
 ```
 
 ## Running ActiveDirectory module
