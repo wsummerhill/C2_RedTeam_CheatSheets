@@ -1,4 +1,4 @@
-# Cobalt Strike Cheat Sheet
+# Cobalt Strike & Red Team Cheat Sheet
 
 ## Running PowerShell scripts
 ```
