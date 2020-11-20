@@ -4,23 +4,23 @@
 ---
 ## Enumeration
 
-### Running PowerShell scripts
+### Running PowerView
 ```
 # powershell-import --> Select PowerView.ps1 to import PS1 file in memory
 # powershell Get-Module PowerView
-# powershell Get-NetUser -Identity testuser -Domain test.lab.local
+# powershell Get-NetUser -Identity testuser -Domain test.lab.com
 ```
 
 ### Running ActiveDirectory module
 ```
 # powershell import --> Select \ADModule\Microsoft.ActiveDirectory.Management.dll  file from https://github.com/samratashok/ADModule
-# powershell Get-ADDomainController -Domain test.lab.local
+# powershell Get-ADDomainController -Domain test.lab.com
 ```
 
 ### Running Sharphound (.NET version of Bloodhound) for AD data collection
 ```
 Running SharpView in memory (.NET version of PowerView)
-# execute-assembly C:\SharpHound.exe --CollectionMethod All --Domain test.lab.local --Stealth --excludedomaincontrollers --windowsonly --OutputDirectory C:\users\testuser\appdata\local\temp\
+# execute-assembly C:\SharpHound.exe --CollectionMethod All --Domain test.lab.com --Stealth --excludedomaincontrollers --windowsonly --OutputDirectory C:\users\testuser\appdata\local\temp\
 
 Just to collect user sessions to determine who is logged in where:
 # execute-assembly C:\SharpHound.exe --CollectionMethod Session,LoggedOn --windowsonly --Outputdirectory C:\users\testuser\appdata\local\temp\
@@ -30,7 +30,14 @@ Collection methods reference: https://bloodhound.readthedocs.io/en/latest/data-c
 ---
 ## Lateral Movement
 
+---
+## Exfiltration
 
+
+---
+## 
+
+---
 # References
 Cobalt Strike commands cheat-sheet: https://github.com/S1ckB0y1337/Cobalt-Strike-CheatSheet
 Sharphound: https://github.com/BloodHoundAD/SharpHound3
