@@ -64,7 +64,7 @@ Get a domain user list
 Password spray from a username and password list
 # powershell Invoke-DomainPasswordSpray -UserList userlist.txt -PasswordList passlist.txt -Domain lab.com -OutFile sprayed-creds.txt
 
-Auto spray a specific password on an auto-generated user list (*noisy*)
+Auto spray a specific password on an auto-generated user list (noisy)
 # powershell Invoke-DomainPasswordSpray -Password Winter2020
 ```
 
