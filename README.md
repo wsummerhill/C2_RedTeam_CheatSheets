@@ -35,22 +35,21 @@ Collection methods reference: https://bloodhound.readthedocs.io/en/latest/data-c
 ## Local Privilege Escalation
 PowerUp
 
----
+-------------------------------------------------------------
 ## Lateral Movement
-RACE.ps1
-
 Invoke-TheHash
 
 Enable Powershell Remoting
 
----
+[RACE.ps1](https://github.com/samratashok/RACE): ACL attacks for lateral movement, persistence and privilege escalation
+-------------------------------------------------------------
 ## Domain Privilege Escalation
 ### GPP Password
 
 ### Password spraying
-(DomainPasswordSpray.ps1)[https://github.com/dafthack/DomainPasswordSpray]
+[DomainPasswordSpray.ps1](https://github.com/dafthack/DomainPasswordSpray)
 ```
-
+test code
 ```
 
 ### Kerberoasting
