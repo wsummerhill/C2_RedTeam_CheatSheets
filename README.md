@@ -1,3 +1,5 @@
+# NOTE: WORK IN PROGRESS
+
 # Cobalt Strike & Red Team Cheat Sheet
 
 ## Running PowerShell scripts
