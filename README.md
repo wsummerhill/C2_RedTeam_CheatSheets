@@ -129,5 +129,7 @@ NTDSutil to dump NTDS.dit locally on a Domain Controller
 ---
 # References
 [Cobalt Strike commands cheat-sheet](https://github.com/S1ckB0y1337/Cobalt-Strike-CheatSheet)
+
 [Sharphound](https://github.com/BloodHoundAD/SharpHound3)
+
 [Mimikatz reference cheat sheet](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Mimikatz.md)
