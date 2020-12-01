@@ -33,14 +33,15 @@ execute-assembly C:\SharpHound.exe --CollectionMethod Session,LoggedOn --Outputd
 ```
 -----------------------------------------------------------------------------------------
 ## Local Privilege Escalation
-PowerUp
+### PowerUp
 ```
 powershell-import --> PowerUp.ps1
 powershell Invoke-AllChecks | Out-File -Encoding ASCII PowerUp-checks.txt
 ```
 
-[SeatBelt](https://github.com/GhostPack/Seatbelt) - GREAT .NET tool by GhostPack to query a local system system/user/remote/misc data  
-Can be used as Admin or normal-privileged user
+### [SeatBelt](https://github.com/GhostPack/Seatbelt)  
+GREAT .NET tool by GhostPack to query a local system system/user/remote/misc data  
+Can be used as Admin or normal-privileged user  
 ```
 # Run ALL checks - returns TONS of data
 execute-assembly C:\SeatBelt.exe -group=all -full -outputfile="C:\Temp\SeatBelt-all.json"
