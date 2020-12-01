@@ -31,12 +31,34 @@ execute-assembly C:\SharpHound.exe --CollectionMethod Session,LoggedOn --Outputd
 
 # Collection methods reference: https://bloodhound.readthedocs.io/en/latest/data-collection/sharphound-all-flags.html
 ```
----
+-----------------------------------------------------------------------------------------
 ## Local Privilege Escalation
 PowerUp
 ```
 powershell-import --> PowerUp.ps1
 powershell Invoke-AllChecks | Out-File -Encoding ASCII PowerUp-checks.txt
+```
+
+[SeatBelt](https://github.com/GhostPack/Seatbelt) - GREAT GhostPack tool to query a local system system/user/remote/misc data
+Can be used as Admin or normal-privileged user
+```
+# Run ALL checks - returns TONS of data
+execute-assembly C:\SeatBelt.exe -group=all -full -outputfile="C:\Temp\SeatBelt-all.json"
+
+# Run only user-related checks - returns things like Chrome data, DPAPI keys, IE tabs, Windows vault/credentials, etc.
+execute-assembly C:\SeatBelt.exe -group=user -outputfile="C:\Temp\SeatBelt-user.json"
+
+# Run only system-related checks - returns things like Antivirus, Applocker, env path/variables, local users/groups, WMI, sysmon, UAC, etc.
+execute-assembly C:\SeatBelt.exe -group=system -outputfile="C:\Temp\SeatBelt-system.json"
+
+# Run only Chrome checks - returns bookmarks, history, presence
+execute-assembly C:\SeatBelt.exe -group=chromium -outputfile="C:\Temp\SeatBelt-chrome.json"
+
+# Run only remote-related checks - returns things like network shares, putty sessions, RDP connections/settings, Filezilla, Windows firewall, etc.
+execute-assembly C:\SeatBelt.exe -group=remote -outputfile="C:\Temp\SeatBelt-remote.json"
+
+# Run only miscellaneous-related checks - returns things like Chrome data, logon events, LOBAS, interesting files, downloads, PS events, scheduled tasks, etc.
+execute-assembly C:\SeatBelt.exe -group=misc -outputfile="C:\Temp\SeatBelt-misc.json"
 ```
 
 ------------------------------------------------------------------------------------------
