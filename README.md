@@ -39,7 +39,7 @@ powershell-import --> PowerUp.ps1
 powershell Invoke-AllChecks | Out-File -Encoding ASCII PowerUp-checks.txt
 ```
 
-[SeatBelt](https://github.com/GhostPack/Seatbelt) - GREAT GhostPack tool to query a local system system/user/remote/misc data
+[SeatBelt](https://github.com/GhostPack/Seatbelt) - GREAT .NET tool by GhostPack to query a local system system/user/remote/misc data  
 Can be used as Admin or normal-privileged user
 ```
 # Run ALL checks - returns TONS of data
