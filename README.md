@@ -33,14 +33,14 @@ execute-assembly C:\SharpHound.exe --CollectionMethod Session,LoggedOn --Outputd
 ```
 -----------------------------------------------------------------------------------------
 ## Local Privilege Escalation
-### PowerUp
+### PowerUp - PowerSploit module
 ```
 powershell-import --> PowerUp.ps1
 powershell Invoke-AllChecks | Out-File -Encoding ASCII PowerUp-checks.txt
 ```
 
-### [SeatBelt](https://github.com/GhostPack/Seatbelt)  
-GREAT .NET tool by GhostPack to query a local system system/user/remote/misc data  
+### [SeatBelt](https://github.com/GhostPack/Seatbelt) - .NET tool by GhostPack  
+GREAT tool to query a local system system/user/remote/misc data  
 Can be used as Admin or normal-privileged user  
 ```
 # Run ALL checks - returns TONS of data
@@ -64,8 +64,6 @@ execute-assembly C:\SeatBelt.exe -group=misc -outputfile="C:\Temp\SeatBelt-misc.
 
 ------------------------------------------------------------------------------------------
 ## Lateral Movement
-Invoke-TheHash
-
 Enable Powershell Remoting manually
 ```
 # Enable on local system with Admin privileges
@@ -86,6 +84,12 @@ make_token AD\Admin password --> This tool will require Admin privileges on the 
 powershell Set-RemotePSRemoting -SamAccountName testuser -ComputerName ops-dc.lab.com --> Force enable PS remoting for the specific user
 powershell Set-RemoteWMI -SamAccountName testuser -Computername ops-dc.lab.com --> Force enable WMI for the specific user
 ```
+
+[Invoke-TheHash](https://github.com/Kevin-Robertson/Invoke-TheHash) - PS tools to perform SMB and WMI pass-the-hash attacks
+```
+fill
+```
+
 ------------------------------------------------------------------------------------------
 ## Domain Privilege Escalation
 ### GPP Password
