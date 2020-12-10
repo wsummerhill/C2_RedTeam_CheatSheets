@@ -31,6 +31,13 @@ execute-assembly C:\SharpHound.exe --CollectionMethod Session,LoggedOn --Outputd
 
 # Collection methods reference: https://bloodhound.readthedocs.io/en/latest/data-collection/sharphound-all-flags.html
 ```
+
+[AD Recon tool](https://github.com/adrecon/ADRecon) - Perform different collection methods (ACLs, OUs, DCs, etc.) and output to Excel files
+```
+powershell-import --> ADRecon.ps1
+# Perform all collection methods and create a new folder of Excel files output in the current directory:
+powershell ADRecon -OutputDir .\ -DomainController ops-dc.lab.com
+```
 -----------------------------------------------------------------------------------------
 ## Local Privilege Escalation
 ### PowerUp - PowerSploit module
