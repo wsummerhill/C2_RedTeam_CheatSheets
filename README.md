@@ -1,4 +1,4 @@
-# NOTE: WORK IN PROGRESS 
+# NOTE: WORK IN PROGRESS
 
 # Cobalt Strike Red Team Cheat Sheet
 ---
