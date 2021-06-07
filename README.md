@@ -274,8 +274,14 @@ execute-assembly C:\Sharpstay.exe action=UserRegistryKey keyname=Debug keypath=H
 ------------------------------------------------------------------------------------------
 # References
 [Cobalt Strike commands cheat sheet](https://github.com/S1ckB0y1337/Cobalt-Strike-CheatSheet) 
+
 [AD exploitation cheat sheet](https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet) 
+
 [Sharphound](https://github.com/BloodHoundAD/SharpHound3) 
+
 [PowerShell remoting cheat sheet](https://blog.netspi.com/powershell-remoting-cheatsheet/) 
+
 [Mimikatz reference cheat sheet](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Mimikatz.md) 
+
 [SpectreOps Cobalt Strike command reference](https://xzfile.aliyuncs.com/upload/affix/20190126174144-9767f9f2-214e-1.pdf) 
+
