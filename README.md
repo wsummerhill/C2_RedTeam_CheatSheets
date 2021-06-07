@@ -270,6 +270,7 @@ execute-assembly C:\Sharpstay.exe action=UserRegistryKey keyname=Debug keypath=H
 # Mnay other methods available on the tool's github documentation
 ```
 [StayKit](https://github.com/0xthirteen/StayKit) - Cobalt Strike persistence kit aggressor script
+
 ------------------------------------------------------------------------------------------
 # References
 [Cobalt Strike commands cheat-sheet](https://github.com/S1ckB0y1337/Cobalt-Strike-CheatSheet)
