@@ -416,6 +416,10 @@ execute-assembly C:\SharPersist.exe -t service -c "C:\Windows\System32\cmd.exe" 
 [StayKit](https://github.com/0xthirteen/StayKit) - Cobalt Strike persistence kit aggressor script
 
 ------------------------------------------------------------------------------------------
+# Cobalt Strike BOFs
+[BOF Collection GitHub page here](https://github.com/wsummerhill/CobaltStrike_BOF_Collections)
+
+------------------------------------------------------------------------------------------
 # References
 [Cobalt Strike commands cheat sheet](https://github.com/S1ckB0y1337/Cobalt-Strike-CheatSheet) 
 
