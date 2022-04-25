@@ -1,5 +1,11 @@
 # Cobalt Strike Red Team Cheat Sheet
 ---
+## C2 Profiles
+
+- [Random C2 Profile](https://github.com/threatexpress/random_c2_profile)
+- [Malleable C2](https://github.com/threatexpress/malleable-c2)
+- [Malleable C2 Profiles](https://github.com/xx0hcd/Malleable-C2-Profiles)
+---
 ## Domain Enumeration
 
 Running PowerView and SharpView
