@@ -235,6 +235,12 @@ powershell-import --> Get-GPPAutologon.ps1
 powerpick Get-GPPAutolgon
 ```
 
+### LAPS Passwords
+[SharpLaps](https://github.com/swisskyrepo/SharpLAPS) - Retrive LAPS password from AD<br>
+The attribute ms-mcs-AdmPwd stores the clear-text LAPS password which is targeted here from LDAP<br>
+``` execute-assembly SharpLAPS.exe /user:DOMAIN\USER /pass:PASSWORD /host:IPADDRESS```
+
+
 ### Password spraying
 [DomainPasswordSpray.ps1](https://github.com/dafthack/DomainPasswordSpray)
 ```
