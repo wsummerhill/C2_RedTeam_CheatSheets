@@ -5,7 +5,9 @@
 - [Random C2 Profile](https://github.com/threatexpress/random_c2_profile)
 - [Malleable C2](https://github.com/threatexpress/malleable-c2)
 - [Malleable C2 Profiles](https://github.com/xx0hcd/Malleable-C2-Profiles)
----
+- [C2concealer](https://github.com/FortyNorthSecurity/C2concealer)
+- [SourcePoint](https://github.com/Tylous/SourcePoint)
+-----------------------------------------------------------------------------------------
 ## Domain Enumeration
 
 Running PowerView and SharpView
@@ -42,6 +44,13 @@ powershell-import --> ADRecon.ps1
 # Perform all collection methods:
 powershell ADRecon -OutputDir .\ -DomainController ops-dc.lab.com
 ```
+
+**Domain SMB Shares Enumeration**<br>
+[SharpShares](https://github.com/mitchmoser/SharpShares) - List accessible shares on remote systems and check read/write privileges<br>
+```
+execute-assembly SharpShares.exe /ldap:all /filter:sysvol,netlogon,ipc$,print$
+```
+
 -----------------------------------------------------------------------------------------
 ## Local Privilege Escalation
 ### [PowerUp](https://github.com/PowerShellEmpire/PowerTools/blob/master/PowerUp/PowerUp.ps1) - PowerSploit module
@@ -423,7 +432,7 @@ execute-assembly C:\SharPersist.exe -t service -c "C:\Windows\System32\cmd.exe" 
 
 ------------------------------------------------------------------------------------------
 # Cobalt Strike BOFs
-[BOF Collection GitHub page here](https://github.com/wsummerhill/CobaltStrike_BOF_Collections)
+[My BOF Collection GitHub page](https://github.com/wsummerhill/CobaltStrike_BOF_Collections)
 
 ------------------------------------------------------------------------------------------
 # References
