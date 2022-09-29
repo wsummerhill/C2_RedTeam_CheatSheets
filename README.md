@@ -1,5 +1,8 @@
 # Cobalt Strike Red Team Cheat Sheet
 
+## Overview
+- [Domain Enumeration](https://github.com/wsummerhill/CobaltStrike_RedTeam_CheatSheet#domain-enumeration)
+
 ## Malleable C2 Profiles
 
 A collection of tools used to generate new malleable C2 profiles to use with Cobalt Strike and better obfuscate your traffic/commands.
