@@ -2,6 +2,7 @@
 
 ## Overview
 - [Malleable C2 Profiles](#malleable-c2-profiles)
+- [Reflective Shellcode Loaders](#reflective-shellcode-loaders)
 - [Domain Enumeration](#domain-enumeration)
 - [Local Privilege Escalation](#local-privilege-escalation)
 - [Lateral Movement](#lateral-movement)
@@ -25,6 +26,15 @@ A collection of tools used to generate new malleable C2 profiles to use with Cob
 - [Malleable C2 Profiles](https://github.com/xx0hcd/Malleable-C2-Profiles)
 - [C2concealer](https://github.com/FortyNorthSecurity/C2concealer)
 - [SourcePoint](https://github.com/Tylous/SourcePoint)
+
+-----------------------------------------------------------------------------------------
+## Reflective Shellcode Loaders
+
+Shellcode loaders to add in Cobalt Strike before generating your shellcode which are used to reflectively generate shellcode for added obfuscation, encryption, and ultimately better evasion. 
+
+- [AceLdr](https://github.com/kyleavery/AceLdr)
+- [TitanLdr](https://github.com/benheise/TitanLdr)
+
 -----------------------------------------------------------------------------------------
 ## Domain Enumeration
 
