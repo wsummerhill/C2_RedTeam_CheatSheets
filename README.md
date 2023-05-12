@@ -658,6 +658,15 @@ execute-assembly C:\SharPersist.exe -t service -c "C:\Windows\System32\cmd.exe" 
 # Cobalt Strike BOFs
 [My BOF Collection GitHub page](https://github.com/wsummerhill/CobaltStrike_BOF_Collections)
 
+### [BOF.NET](https://github.com/CCob/BOF.NET/pull/1)
+A .NET runtime tool to load assemblies in memory and avoid the typical fork-and-run model from `execute-assembly`. Use BOF.NET to run any .NET tool for better evasion by residing in your current process. Note that this will not bypass AMSI or ETW as those will have to be unhooked separately, if needed.
+```
+bofnet_init
+bofnet_load /path/to/assembly.exe
+bofnet_listassemblies
+bofnet_executeassembly AssemblyName argument1 argument2 
+```
+
 ------------------------------------------------------------------------------------------
 # References
 [Cobalt Strike commands cheat sheet](https://github.com/S1ckB0y1337/Cobalt-Strike-CheatSheet) 
