@@ -34,6 +34,7 @@ Shellcode loaders to add in Cobalt Strike before generating your shellcode which
 
 - [AceLdr](https://github.com/kyleavery/AceLdr)
 - [TitanLdr](https://github.com/benheise/TitanLdr)
+- [BokuLoader](https://github.com/boku7/BokuLoader) - Bobby Cooke's reflective loader
 
 -----------------------------------------------------------------------------------------
 ## Domain Enumeration
