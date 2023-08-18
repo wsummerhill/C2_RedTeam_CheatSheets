@@ -17,6 +17,11 @@
 
 -----------------------------------------------------------------------------------------
 
+#### Important OPSEC notes...
+For an actual red team, do NOT use `execute-assembly` at all, ever! Instead, sub the command for [BOF.NET](https://github.com/CCob/BOF.NET/pull/1) `bofnet_executeassembly` or another .NET assembly loader BOF (i.e. [InlineExecute-Assembly](https://github.com/anthemtotheego/InlineExecute-Assembly)).<br />
+For everything else, use BOFs instead of `run` or `shell` commands for best OPSEC. ([My BOF cheat sheet here](https://github.com/wsummerhill/CobaltStrike_BOF_Collections)).
+
+-----------------------------------------------------------------------------------------
 ## Malleable C2 Profiles
 
 A collection of tools used to generate new malleable C2 profiles to use with Cobalt Strike and better obfuscate your traffic/commands.
