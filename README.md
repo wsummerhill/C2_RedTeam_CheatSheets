@@ -55,12 +55,6 @@ powershell Get-NetUser -Identity testuser -Domain lab.com
 execute-assembly C:\SharpView.exe Invoke-CheckLocalAdminAccess --> Check servers for local admin using current privileges
 ```
 
-Running ActiveDirectory module
-```
-powershell import --> Select \ADModule\Microsoft.ActiveDirectory.Management.dll  file from https://github.com/samratashok/ADModule
-powershell Get-ADDomainController -Domain lab.com
-```
-
 Running Sharphound (.NET version of Bloodhound) for AD domain collection
 ```
 # Running SharpView in memory (.NET version of PowerView)
