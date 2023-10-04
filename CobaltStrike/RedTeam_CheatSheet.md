@@ -19,7 +19,7 @@
 
 #### Important OPSEC notes...
 For an actual red team, do NOT use `execute-assembly` at all, ever! Instead, sub the command for [BOF.NET](https://github.com/CCob/BOF.NET/pull/1) `bofnet_executeassembly` or another .NET assembly loader BOF (i.e. [InlineExecute-Assembly](https://github.com/anthemtotheego/InlineExecute-Assembly)).<br />
-For everything else, use BOFs instead of `run` or `shell` commands for best OPSEC. ([My BOF cheat sheet here](https://github.com/wsummerhill/CobaltStrike_BOF_Collections)).
+For everything else, use BOFs instead of `run` or `shell` commands for best OPSEC. ([BOF cheat sheet here](https://github.com/wsummerhill/C2_RedTeam_CheatSheet/blob/main/CobaltStrike/BOF_Collections.md)).
 
 -----------------------------------------------------------------------------------------
 ## Malleable C2 Profiles
