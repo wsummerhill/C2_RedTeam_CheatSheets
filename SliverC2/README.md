@@ -27,7 +27,10 @@ generate ... -> Create Session payload
 generate beacon ... -> Create Beacon payload
 
 # Armory (BOFs)
-armory ...... (TO DO)
+armory -> List all available packages/bundles in armory
+armory search <query> -> Search for specific aromory package/bundle
+armory install <name> -> Install a new armory package/bundle
+armory update -> Update installed packages
 
 # Miscellaneous
 updates -> Check for Sliver updates
