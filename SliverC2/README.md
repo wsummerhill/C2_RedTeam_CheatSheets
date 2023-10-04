@@ -34,7 +34,7 @@ armory update -> Update installed packages
 
 # Miscellaneous
 hosts -> List all hosts that have had beacons or sessions
-updates -> Check for Sliver updates
+update -> Check for Sliver updates
 clear -> Clear the screen
 loot -> Show captured loot
 reaction ... -> Create automatic command upon specific events like a new session
