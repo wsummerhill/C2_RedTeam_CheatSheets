@@ -4,7 +4,50 @@
 
 ## Setup
 
-TO DO
+Sliver client and server can both be downloaded from public [GitHub releases](https://github.com/BishopFox/sliver/releases/), or it can manually be compiled.
+
+### Sliver Server 
+
+The Sliver server can be installed running in "Daemon mode" using the [Linux Install Script](https://github.com/BishopFox/sliver/wiki/Linux-Install-Script). Use a quick Bash script below to help with setting up requirements and installing/running the Sliver server:
+```
+#!/bin/bash
+
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+    echo "Not running as root"
+    exit
+fi
+
+# Stop apache if its started automatically
+service apache2 stop
+
+cd /tmp
+apt update -y
+apt update --fix-missing -y
+apt install git mingw-w64 net-tools -y
+
+# Sliver install in Daemon mode
+curl https://sliver.sh/install|sudo bash
+systemctl status sliver --no-pager
+echo Sliver running in Daemon mode!
+
+# Create new user config
+cd /root
+IP=`curl https://ifconfig.me/ip`
+./sliver-server operator --name sliver-user --lhost "$IP" --save /root/sliver-user.cfg
+exit
+```
+
+Download the output config file `/root/sliver-user.cfg` to import on your Sliver client.
+
+If you want to automate Sliver C2 setup and deployment in DigitalOcean, check out my [GitHub repo](https://github.com/wsummerhill/Automation-Scripts/tree/main/Sliver-C2-deployment_DigitalOcean).
+
+### Sliver Client
+
+Use the Sliver client to import your `sliver-user.cfg` config file and use it to connect to the Sliver server.
+```
+./sliver-client_OS import ./sliver-user.cfg    # Import config
+./sliver-client_OS                           # Connect to Sliver server
+```
 
 ---
 ## Usage - CLI Useful Commands
