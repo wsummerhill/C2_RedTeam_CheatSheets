@@ -87,9 +87,9 @@ tgtdelegation currentdomain default
 [+] Local path to usable .ccache: /home/loki@MARVEL.LOCAL.ccache
 [+] Local path to usable .kirbi: /home/loki@MARVEL.LOCAL.kirbi
 ```
-Now use .ccache or .kirbi files to load TGT into memory <br />
+Now use .ccache or .kirbi files offline on a Linux system to load TGT into memory: <br />
 ```export KRB5CCNAME=/home/loki@MARVEL.LOCAL.ccache``` <br />
-Continue to use ticket in memory with other tooling of your choice! (i.e. Impacket's "**-k -no-pass**" command) <br />
+Continue to use ticket in memory with other tooling of your choice through SOCKS proxy! (i.e. Impacket's `-k -no-pass` command) <br />
 
 
 - [**PrivKit**](https://github.com/mertdas/PrivKit)<br />
@@ -247,7 +247,6 @@ nanorobeus64 kerberoast /spn:HTTP/server.fortress.local --> Kerberoast a specifi
 
 ---
 ### Miscellaneous
-
 - [**BOF Template**](https://github.com/Cobalt-Strike/bof_template)<br />
 Used for creating your very own BOFs!
 
