@@ -133,6 +133,13 @@ static_syscalls_inject <PID> <listener_name> / static_syscalls_shinject <PID> <p
 static_syscalls_dump <PID> [path_to_output] --> Process dump with syscalls (i.e. Dump LSASS!)
 ```
 
+- [Threadless Inject BOF](https://github.com/iilegacyyii/ThreadlessInject-BOF)
+This process injection BOF has to be used by remotely hooking a function and specify which DLL/function you want to target for injecting shellcode into. <br />
+```
+threadless-inject <pid> <dll> <export function> <shellcode path>
+threadless-inject 1234 ntdll.dll NtOpenFile shellcode.bin --> Inject into existing process
+```
+  
 - [**MiniDumpWriteDump**](https://github.com/rookuu/BOFs)<br />
 Uses static syscalls to dump a process such as LSASS to output file<br />
 ```minidumpwritedump <PID> <path_of_dmp?>```
