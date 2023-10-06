@@ -37,16 +37,34 @@ IP=`curl https://ifconfig.me/ip`
 exit
 ```
 
-Download the output config file `/root/sliver-user.cfg` to import on your Sliver client.
+The Sliver service can be verified that it's running with the command `systemctl status sliver`.<br />
+Download the output config file `/root/sliver-user.cfg` from the above Bash script to import on your Sliver client.
 
 If you want to automate Sliver C2 setup and deployment in DigitalOcean, check out my [GitHub repo](https://github.com/wsummerhill/Automation-Scripts/tree/main/Sliver-C2-deployment_DigitalOcean).
 
 ### Sliver Client
 
-Use the Sliver client to import your `sliver-user.cfg` config file and use it to connect to the Sliver server.
+Use the Sliver client to import your `sliver-user.cfg` config file and use it to connect to the Sliver server:
 ```
 ./sliver-client_OS import ./sliver-user.cfg    # Import config
-./sliver-client_OS                           # Connect to Sliver server
+./sliver-client_OS                             # Connect to Sliver server
+
+Connecting to <IP ADDRESS>:31337 ...
+[*] Loaded 69 extension(s) from disk
+
+    ███████╗██╗     ██╗██╗   ██╗███████╗██████╗
+    ██╔════╝██║     ██║██║   ██║██╔════╝██╔══██╗
+    ███████╗██║     ██║██║   ██║█████╗  ██████╔╝
+    ╚════██║██║     ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗
+    ███████║███████╗██║ ╚████╔╝ ███████╗██║  ██║
+    ╚══════╝╚══════╝╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝
+
+All hackers gain undying
+[*] Server v1.5.41 - f2a3915c79b31ab31c0c2f0428bbd53d9e93c54b
+[*] Welcome to the sliver shell, please type 'help' for options
+
+sliver > help
+...
 ```
 
 ---
