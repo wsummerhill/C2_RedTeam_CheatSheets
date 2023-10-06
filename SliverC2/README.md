@@ -68,7 +68,7 @@ sliver > help
 ```
 
 ---
-## Usage - CLI Useful Commands
+## Usage - Useful CLI Commands Cheat Sheet
 ```
 # Starting HTTP/S Listeners
 http -> Start HTTP listener
@@ -109,13 +109,20 @@ reaction ... -> Create automatic command upon specific events like a new session
 ---
 ## Listeners - HTTP(S)
 
+TO DO
+
 ---
-## Payloads
-### Beacon Payload
+## Redirectors - HTTP(S)
 
 TO DO
 
-### Session Payload
+---
+## Payloads
+### Beacon Payloads
+
+TO DO
+
+### Session Payloads
 
 TO DO
 
@@ -128,3 +135,4 @@ parameter when generating new payloads which will show the debug output in the C
 ## OPSEC Tips
 
 - Best practices to modify the default HTTP(S) C2 profile at the local path `/root/.sliver/configs/http-c2.json`
+- Always use Sliver Armory wherever you can to execute commands within the current process instead of using commands or tools that spawn new or child processes
