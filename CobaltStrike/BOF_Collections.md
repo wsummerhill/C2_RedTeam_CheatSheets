@@ -119,6 +119,16 @@ bofnet_execute bof_name [args] --> Execute assembly
 bofnet_shutdown --> Kill BOF.NET
 ```
 
+- [**Modified BOF.NET**](https://github.com/williamknows/BOF.NET/tree/main)<br />
+Updated BOF.NET repo with the added `bofnet_executeassembly` command to easily call .NET assemblies<br />
+```
+bofnet_init --> Start BOF.NET
+bofnet_load /Path/To/Assembly.exe --> Load assembly
+bofnet_executeassembly AssemblyName arg1 arg2 arg3 --> Execute .NET assembly
+bofnet_executeassembly Seatbelt -group=remote --> SeatBelt execution example
+bofnet_shutdown --> Kill BOF.NET
+```
+
 ---
 ### Exploitation
 
