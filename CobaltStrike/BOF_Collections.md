@@ -9,12 +9,35 @@ BOF that provides host enumeration and awarness commands which are more opsec fr
 Example commands include:<br />
 ```
 arp --> List arp tables
+adcs_enum --> List ADCS certificate templates
+env --> List environment variables
+get_password_policy [domaincontroller] --> Get local or remote domain password policy
 ipconfig --> Run ipconfig
-ldapsearch [query]
 listdns --> Pulls DNS cache
+listpipes --> List local named pipes - Useful for creating names pipes blending in with existing ones
+netstat --> Run netstat locally to view network connections
 netuser [username] [opt: domain] --> Get info on user account
+netGroupListMembers [groupname] [opt: domain] --> Get group members locally or from a domain group
+netLocalGroupList [opt: server] --> List groups locally or on a remote system
+netLocalGroupListMembers [groupname] [opt: server] --> List local group members or on a remote system
+netloggedon [hostname] --> List logged on users locally or on a remote system
+netshares [hostname] --> List SMB shares locally or on a remote system
+netsession [opt:computer] --> List sessions locally or on a remote system
 nslookup [hostname] --> Perform DNS query
+routeprint --> List IPv4 routing table
+sc_query [opt: service name] [opt: server] --> Enumerate services locally or remotely
+schtasksenum [opt: server] --> Enumerate scheduld tasks locally or remotely
 tasklist --> Get local running processes
+uptime --> List local system uptime
+whoami --> Runs whoami /all
+
+# LDAP search examples:
+ldapsearch [query] --> Run LDAP queries in the domain
+ldapsearch “(&(objectCategory=group)(name=Domain Admins))” --> Get all Domain Admins
+ldapsearch  “(&(&(servicePrincipalName=*)(UserAccountControl:1.2.840.113556.1.4.803:=512))(!(Us erAccountControl:1.2.840.113556.1.4.803:=2)))"” --> Get kerberoastable accounts with SPNs set
+ldapsearch "(&(objectClass=user)(samaccountname=*$))" --> Get all machine accounts
+ldapsearch "(objectCategory=groupPolicyContainer)" --> Get all GPOs
+ldapsearch "(objectClass=trustedDomain)" --> Get domain trusts
 ```
 
 - [**Find Objects BOF**](https://github.com/outflanknl/FindObjects-BOF)<br />
