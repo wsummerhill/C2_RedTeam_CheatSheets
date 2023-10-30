@@ -71,45 +71,54 @@ sliver > help
 ## Usage - Useful CLI Commands Cheat Sheet
 ```
 # Starting HTTP/S Listeners
-http -> Start HTTP listener
-https -> Start HTTPS listener
-https -c cert.pen -k key_decrypted.pem -d domain.com -p -> Start HTTPS listener using a cert/key which only accepts connections from a specific domain (i.e. redirector)
+http # Start HTTP listener
+https # Start HTTPS listener
 
 # Managing or stopping listeners
-jobs -> View active jobs (aka listeners/stages)
-jobs -k <number> -> Kill listener job
+jobs # View active jobs (aka listeners/stages)
+jobs -k <number> # Kill listener job
 
 # Beacon/Session management
-beacons -> List active beacons
-sessions -> List active sessions
-beacons rm -> Select a beacon to remove
-use <ID> -> Interact with a Beacon/Session
-background -> Background an active Beacon/Session
+beacons # List active beacons
+sessions # List active sessions
+beacons rm # Select a beacon to remove
+use <ID> # Interact with a Beacon/Session
+background # Background an active Beacon/Session
 
 # Payloads
-implants -> List all created payload builds
-implants rm <NAME> -> Remove an implant build
-generate ... -> Create Session payload
-generate beacon ... -> Create Beacon payload
+implants # List all created payload builds
+implants rm <NAME> # Remove an implant build
+generate -h ... # Create Session payload
+generate beacon -h ... # Create Beacon payload
 
 # Armory (BOFs)
-armory -> List all available packages/bundles in armory
-armory search <query> -> Search for specific aromory package/bundle
-armory install <name> -> Install a new armory package/bundle
-armory update -> Update installed packages
+armory # List all available packages/bundles in armory
+armory search <query> # Search for specific aromory package/bundle
+armory install <name> # Install a new armory package/bundle
+armory update # Update installed packages
 
 # Miscellaneous
-hosts -> List all hosts that have had beacons or sessions
-update -> Check for Sliver updates
-clear -> Clear the screen
-loot -> Show captured loot
-reaction ... -> Create automatic command upon specific events like a new session
+hosts # List all hosts that have had beacons or sessions
+update # Check for Sliver updates
+clear # Clear the screen
+loot # Show captured loot
+reaction ... # Create automatic command upon specific events like a new session
 ```
 
 ---
-## Listeners - HTTP(S)
+## Listeners
+### HTTP(S)
 
-TO DO
+```
+# Start HTTP listener accepting connections from specific domain (i.e. redirector)
+http -d redirector-domain.com
+
+# Start HTTPS listener using built-in letsencrypt features (not recommended for red teams)
+https -d redirector-domain.com --lets-encrypt
+
+# Start HTTPS listener using a cert/key which only accepts connections from a specific domain, persistent across restarts
+https -c cert.pen -k key_decrypted.pem -d redirector-domain.com -p
+```
 
 ---
 ## Redirectors - HTTP(S)
@@ -118,6 +127,10 @@ TO DO
 
 ---
 ## Payloads
+### Staged Payloads
+
+TO DO
+
 ### Beacon Payloads
 
 TO DO
@@ -135,4 +148,5 @@ parameter when generating new payloads which will show the debug output in the C
 ## OPSEC Tips
 
 - Best practices to modify the default HTTP(S) C2 profile at the local path `/root/.sliver/configs/http-c2.json`
-- Always use Sliver Armory wherever you can to execute commands within the current process instead of using commands or tools that spawn new or child processes
+    - [Sliver docs - Modifying C2 traffic](https://github.com/BishopFox/sliver/wiki/HTTP(S)-C2#modifying-c2-traffic)
+- Always use Sliver Armory wherever you can to execute commands within the current process instead of using commands or tools that spawn new or child processes.
