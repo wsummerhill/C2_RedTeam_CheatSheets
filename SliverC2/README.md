@@ -145,6 +145,22 @@ Sliver can easily create debugging payloads for testing execution or viewing C2 
 parameter when generating new payloads which will show the debug output in the CLI console. 
 
 ---
+## BOFs
+### Sliver Armory
+
+Pre-built library of BOFs that have been added to Sliver in the [official repository](https://github.com/sliverarmory) that can easily be loaded and run in Beacons/Sessions. 
+
+### Custom BOFs
+
+[Sliver Keylogger](https://github.com/trustedsec/SliverKeylogger)
+Custom Sliver keylogger BOF from trustedsec. The BOF was later added to Sliver Armory in 2023 and can easily be loaded there using `armory install raw-keylogger`. Usage: <br />
+```
+raw_keylogger 1  # Start keylogger
+raw_keylogger 2  # Get keylogged contents in Sliver
+raw_keylogger 0  # Stop keylogger
+```
+
+---
 ## OPSEC Tips
 
 - Best practices to modify the default HTTP(S) C2 profile at the local path `/root/.sliver/configs/http-c2.json`
