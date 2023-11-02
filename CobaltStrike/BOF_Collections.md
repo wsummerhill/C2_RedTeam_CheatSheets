@@ -285,6 +285,21 @@ nanorobeus64 dump /all --> Dump all Kerberos tickets, requires local admin privi
 nanorobeus64 kerberoast /spn:HTTP/server.fortress.local --> Kerberoast a specific SPN
 ```
 
+- [**Defender-Exclusions-Creator**](https://github.com/EspressoCake/Defender-Exclusions-Creator-BOF)
+Easily create, add, or remove Windows Defender exclusions using this BOF. Supports "Add/Remove" methods and exclution types "Path/Process/Extension".<br />
+```
+# Help
+cEnumDefenderException (add|remove) (extension|path|process) thing_to_add_or_remove_exception_for [optional computer name]
+
+# Examples - Local
+cEnumDefenderException add extension .tmp
+cEnumDefenderException add path C:\windows\temp\
+cEnumDefenderException add process NotMalicious.exe
+
+# Example - Remotely
+cEnumDefenderException add path C:\users\USERNAME\Downloads\ HOSTNAME.domain.local
+``` 
+
 ---
 ### Miscellaneous
 - [**BOF Template**](https://github.com/Cobalt-Strike/bof_template)<br />
