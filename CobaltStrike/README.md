@@ -110,6 +110,23 @@ execute-assembly C:\snaffler.exe -d DOMAN.COM -s -o C:\temp\snaffler.log
 execute-assembly C:\snaffler.exe -s -o C:\temp\snaffler2.log -n hostname1.domain.com,hostname2.domain.com,hostname3.domain.com
 ```
 
+[crackmapexec](https://www.crackmapexec.wiki/) SMB share enumeration/spidering through SOCKS
+```
+proxychains crackmapexec smb X.X.X.X -u username -p pass [-d domain.com] --shares --> List remote SMB shares
+proxychains crackmapexec smb X.X.X.X -u username -p pass [-d domain.com] --spider "Share Name" --pattern txt --> Spider an SMB share
+proxychains crackmapexec smb X.X.X.X -u username -p pass [-d domain.com] --spider-folder C\$ --pattern txt --depth 3 --> Spider a folder for a specific pattern
+```
+
+[MANSPIDER](https://github.com/blacklanternsecurity/MANSPIDER) - Python alternative SMB crawler through SOCKS<br />
+Output files are automatically downlaoded to `$HOME/.manspider/loot` directory, can be disabled with `-n` for slightly better OPSEC!<br />
+```
+# Search system with network share for interesting file extensions
+proxychains manspider NetworkShare.DOMAIN.COM -e bat com vbs ps1 psd1 psm1 pem key rsa pub reg txt cfg conf config -d DOMAIN -u USER -p PASSWORD
+
+# Search IP range for filenames that may contain credentials
+proxychaisn manspider 192.168.0.0/24 -f passw user admin account network login logon cred -d DOMAIN -u USER -p PASSWORD
+```
+
 ### Miscellaneous Remote Workstation/Server stuff
 
 List and kill processes on remote system (requires local Admin)
