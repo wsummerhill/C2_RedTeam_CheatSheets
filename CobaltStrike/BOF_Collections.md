@@ -276,7 +276,7 @@ patchit revertEtw --> Revert only ETW
 Uses WinAPI and avoids fork&run to take a screenshot.<br />
 `screenshot_bof output.bmp 1`
 
-- [**nanorubeus**](https://github.com/wavvs/nanorobeus)<br />
+- [**nanorobeus**](https://github.com/wavvs/nanorobeus)<br />
 BOF equivalent of Rubeus for managing Kerberos tickets. It can be used cross-platform for multiple C2s including Cobalt Strike, Sliver and Brute Ratel.<br />
 ```
 nanorobeus64 luid --> Get logon current ID
