@@ -305,7 +305,7 @@ cEnumDefenderException add path C:\users\USERNAME\Downloads\ HOSTNAME.domain.loc
 - [**BOF Template**](https://github.com/Cobalt-Strike/bof_template)<br />
 Used for creating your very own BOFs!
 
-- [**Cobalt Strike Blog: Simplifying BOF development**]((https://www.cobaltstrike.com/blog/simplifying-bof-development)<br />
+- [**Cobalt Strike Blog: Simplifying BOF development**](https://www.cobaltstrike.com/blog/simplifying-bof-development)<br />
 BOFs in Cobalt Strike can now be written in C++ as of August, 2023.
 
 - [**BOF Hound**](https://github.com/fortalice/bofhound)<br />
