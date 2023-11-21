@@ -45,8 +45,8 @@ If you want to automate Sliver C2 setup and deployment in DigitalOcean, check ou
 #### Manually creating or removing operators
 Creating new operators:<br />
 `./sliver-server operator --name summerhill --lhost X.X.X.X --save /root/user-summerhill.cfg`
-<br />
-Sliver configs can be viewed or remove after importing them on your disk. Improrted configs get stored to the following locations:<br />
+<br /><br />
+Sliver configs can be viewed or remove after importing them on your disk. Improrted configs get stored to the following locations:
 - **Mac & Linux:** ~/.sliver-client/configs
 
 #### Server Configurations
