@@ -42,8 +42,12 @@ Download the output config file `/root/sliver-user.cfg` from the above Bash scri
 
 If you want to automate Sliver C2 setup and deployment in DigitalOcean, check out my [GitHub repo](https://github.com/wsummerhill/Automation-Scripts/tree/main/Sliver-C2-deployment_DigitalOcean).
 
-#### Manually creating operators
+#### Manually creating or removing operators
+Creating new operators:<br />
 `./sliver-server operator --name summerhill --lhost X.X.X.X --save /root/user-summerhill.cfg`
+<br />
+Sliver configs can be viewed or remove after importing them on your disk. Improrted configs get stored to the following locations:<br />
+- **Mac & Linux:** ~/.sliver-client/configs
 
 #### Server Configurations
 [Documentation link](https://github.com/BishopFox/sliver/wiki/Configuration-Files)<br />
