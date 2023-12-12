@@ -120,6 +120,17 @@ Windows privilege escalation BOF kit used for detecting priv esc vulnerabilities
 Check for all vulnerabilities supported: <br />
 ```privcheck```
 
+- [**enumfiles BOF**](https://github.com/wsummerhill/BOF-enumfiles)<br />
+Simple BOF I developed in C++ to quickly enumerate local files of interest for post-exploitation. Useful to help find potential LOLbins, remoting software, browser or web server installations, etc.<br />
+```
+enumfiles show --> Dont run checks, just show all enumeration checks and files/folders supported
+enumfiles all --> Run all enumeration checks
+enumfiles lolbins --> Run only lolbins checks
+enumfiles browser-userdata --> Run only browser user data
+enumfiles remoting --> Run only remoting software checks
+...
+```
+
 ---
 ### Executing .NET Assemblies
 
