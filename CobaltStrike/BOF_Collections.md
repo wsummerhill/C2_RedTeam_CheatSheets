@@ -40,14 +40,6 @@ ldapsearch "(objectCategory=groupPolicyContainer)" --> Get all GPOs
 ldapsearch "(objectClass=trustedDomain)" --> Get domain trusts
 ```
 
-- [**Find Objects BOF**](https://github.com/outflanknl/FindObjects-BOF)<br />
-Use direct system calls to enumerate processes for specific loaded modules (amsi.dll, clr.dll) or process handles (lsass.exe)<br />
-Avoids fork&run<br />
-```
-FindModule amsi.dll
-FindProcHandle lsass.exe
-```
-
 - [**BOF Collection**](https://github.com/rvrsh3ll/BOF_Collection)<br />
 A set of BOFs useful for enumeration and exploitation. Examples include:<br />
 ```
@@ -93,7 +85,11 @@ Psw --> 	Show window titles from processes with active windows
 Psx --> Show detailed information from all processes running on the system and provides a summary of installed security products and tools.
 Smbinfo <compuername> --> Get SMB info of remote system instead of using CS portscan SMB
 Winver --> Shows the version of Windows that is running on the local system
+FindModule amsi.dll --> Identify processes which have a certain module loaded, i.e. winhttp.dll
+FindProcHandle lsass.exe -->  Identify processes with a specific process handle in use, i.e. lsass.exe
 ```
+Use direct system calls to enumerate processes for specific loaded modules (amsi.dll, clr.dll) or process handles (lsass.exe)<br />
+Avoids fork&run<br />
 
 - [**tgtdelegation**](https://github.com/sliverarmory/tgtdelegation)<br />
 Kerberos ticket delegation - Obtain usable TGTs for the current user, does not require Admin privileges!<br />
