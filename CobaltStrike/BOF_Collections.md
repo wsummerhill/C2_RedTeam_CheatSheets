@@ -88,8 +88,6 @@ Winver --> Shows the version of Windows that is running on the local system
 FindModule amsi.dll --> Identify processes which have a certain module loaded, i.e. winhttp.dll
 FindProcHandle lsass.exe -->  Identify processes with a specific process handle in use, i.e. lsass.exe
 ```
-Use direct system calls to enumerate processes for specific loaded modules (amsi.dll, clr.dll) or process handles (lsass.exe)<br />
-Avoids fork&run<br />
 
 - [**tgtdelegation**](https://github.com/sliverarmory/tgtdelegation)<br />
 Kerberos ticket delegation - Obtain usable TGTs for the current user, does not require Admin privileges!<br />
