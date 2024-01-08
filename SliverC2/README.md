@@ -1,14 +1,12 @@
 # Sliver C2 Cheat Sheet
 
-# Note: Work in Progress!!
-
 ## Setup
 
 Sliver client and server can both be downloaded from public [GitHub releases](https://github.com/BishopFox/sliver/releases/), or it can manually be compiled.
 
 ### Sliver Server 
 
-The Sliver server can be installed running in "Daemon mode" using the [Linux Install Script](https://github.com/BishopFox/sliver/wiki/Linux-Install-Script). Use a quick Bash script below to help with setting up requirements and installing/running the Sliver server:
+The Sliver server can be installed running in "Daemon mode" using the [Linux Install Script](https://sliver.sh/docs?name=Linux+Install+Script). Use a quick Bash script below to help with setting up requirements and installing/running the Sliver server:
 ```
 #!/bin/bash
 
@@ -50,7 +48,7 @@ Sliver configs can be viewed or remove after importing them on your disk. Impror
 - **Mac & Linux:** ~/.sliver-client/configs
 
 #### Server Configurations
-[Documentation link](https://github.com/BishopFox/sliver/wiki/Configuration-Files)<br />
+[Documentation link](https://sliver.sh/docs?name=Configuration+Files)<br />
 The Sliver server config file can be viewed and modified (if needed) at the path `~/.sliver/configs/server.json`. The backend SQL database config for Sliver can be viewed at the path `~/.sliver/configs/database.json`. When Multiplayer mode is used, Sliver client configs get saved to the path `~/.sliver-client/configs/`.
 
 ### Sliver Client
@@ -118,7 +116,7 @@ reaction ... # Create automatic command upon specific events like a new session
 --------------------------------------------------------------
 ## Listeners
 ### HTTP(S)
-
+HTTP/S listeners can be creating using the `http` or `https` commands.
 ```
 # Start HTTP listener accepting connections from specific domain (i.e. redirector)
 http -d redirector-domain.com
@@ -131,7 +129,16 @@ https -c cert.pen -k key_decrypted.pem -d redirector-domain.com -p
 ```
 
 ### mTLS
+Mutual TLS (mTLS) listeners can be created using the `mtls` command. mTLS uses public and private keys with TLS certificates to perform connectivity via TLS handsharkes. More info on mTLS can be found [here](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).
+```
+# Start an mTLS listener accepting all connections
+mtls
 
+
+```
+
+### Modifying Listeners
+Listeners can be viewed with the `jobs` command. If you want to remove any listeners, you can use the command `jobs -k <ID>` to kill a job.
 
 --------------------------------------------------------------
 ## Redirectors - HTTP(S)
