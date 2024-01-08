@@ -149,6 +149,9 @@ One easy redirector to setup I frequently use is with AWS lambda from this [blog
 Upon creation, your AWS Lambda function page should look something like this:
 ![image](https://github.com/wsummerhill/C2_RedTeam_CheatSheets/assets/35749735/9c2e1009-6546-4e53-aacf-fd6646b10945)
 
+Within the Function permissions, the resource-based policy statement can be set to "FunctionURLAllowPublicAccess" to allow anonymous access to the Function.
+![image](https://github.com/wsummerhill/C2_RedTeam_CheatSheets/assets/35749735/c86cd937-b6e2-41c2-af9d-fe4c7c0cd41c)
+
 And the `lambda_function.py` code should look something like this, pointing to your C2 IP/domain:
 ![image](https://github.com/wsummerhill/C2_RedTeam_CheatSheets/assets/35749735/c349af74-bf40-4b32-a894-5d1089d06f54)
 
