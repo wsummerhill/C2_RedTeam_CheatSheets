@@ -142,8 +142,9 @@ Listeners can be viewed with the `jobs` command. If you want to remove any liste
 
 --------------------------------------------------------------
 ## Redirectors - HTTP(S)
+### AWS Lambda HTTPS Redirector
 
-TO DO
+One easy redirector to setup I frequently use is with AWS lambda from this [blog post here](https://thegreycorner.com/2023/08/30/aws-service-C2-forwarding.html#:~:text=as%20Code%20format.-,Function,-URL%20to%20Lambda) from The Grey Corner. Its easy to setup an AWS Lambda function pointing to your C2 server domain/IP address and use the function URL as your redirector URL when creating shellcode. Additionally, you could create an API Gateway to point to your Lambda function and then use the API Gateway as your redirector URL. 
 
 --------------------------------------------------------------
 ## Payloads
