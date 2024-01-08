@@ -146,6 +146,13 @@ Listeners can be viewed with the `jobs` command. If you want to remove any liste
 
 One easy redirector to setup I frequently use is with AWS lambda from this [blog post here](https://thegreycorner.com/2023/08/30/aws-service-C2-forwarding.html#:~:text=as%20Code%20format.-,Function,-URL%20to%20Lambda) from The Grey Corner. Its easy to setup an AWS Lambda function pointing to your C2 server domain/IP address and use the function URL as your redirector URL when creating shellcode. Additionally, you could create an API Gateway to point to your Lambda function and then use the API Gateway as your redirector URL. 
 
+Upon creation, your AWS Lambda function page should look something like this:
+![image](https://github.com/wsummerhill/C2_RedTeam_CheatSheets/assets/35749735/9c2e1009-6546-4e53-aacf-fd6646b10945)
+
+And the `lambda_function.py` code should look something like this, pointing to your C2 IP/domain:
+![image](https://github.com/wsummerhill/C2_RedTeam_CheatSheets/assets/35749735/c349af74-bf40-4b32-a894-5d1089d06f54)
+
+
 --------------------------------------------------------------
 ## Payloads
 ### Staged Payloads
