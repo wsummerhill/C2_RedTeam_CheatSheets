@@ -25,11 +25,15 @@ netshares [hostname] --> List SMB shares locally or on a remote system
 netsession [opt:computer] --> List sessions locally or on a remote system
 nslookup [hostname] --> Perform DNS query
 routeprint --> List IPv4 routing table
-sc_query [opt: service name] [opt: server] --> Enumerate services locally or remotely
-schtasksenum [opt: server] --> Enumerate scheduld tasks locally or remotely
 tasklist --> Get local running processes
 uptime --> List local system uptime
 whoami --> Runs whoami /all
+sc_query [opt: service name] [opt: server] --> Enumerate services locally or remotely
+schtasksenum [opt: server] --> Enumerate all schedule tasks locally or remotely
+schtaskscreate [opt: server] \ [USER/SYSTEM] CREATE --> Create new scheduled task - select scheduled task XML definition file in pop-up window
+schtaskscreate [opt: server] \path\taskname --> Query an existing task
+schtasksdelete [opt: server] \path\taskname TASK --> Delete an existing task
+schtaskscreate [opt: server] \path\taskname --> Run an existing task
 
 # LDAP search examples:
 ldapsearch [query] --> Run LDAP queries in the domain
@@ -314,10 +318,11 @@ Uses WinAPI and avoids fork&run to take a screenshot.<br />
 - [**nanorobeus**](https://github.com/wavvs/nanorobeus)<br />
 BOF equivalent of Rubeus for managing Kerberos tickets. It can be used cross-platform for multiple C2s including Cobalt Strike, Sliver and Brute Ratel.<br />
 ```
-nanorobeus64 luid --> Get logon current ID
-nanorobeus64 klist --> List all Kerberos tickets
-nanorobeus64 dump /all --> Dump all Kerberos tickets, requires local admin privileges
-nanorobeus64 kerberoast /spn:HTTP/server.fortress.local --> Kerberoast a specific SPN
+nanorobeus luid --> Get logon current ID
+nanorobeus klist --> List all Kerberos tickets
+nanorobeus dump /all --> Dump all Kerberos tickets, requires local admin privileges
+nanorobeus kerberoast /spn:HTTP/server.fortress.local --> Kerberoast a specific SPN
+nanorobeus ptt /ticket:<kirbi-base64> --> Pass-the-ticket
 ```
 
 - [**Defender-Exclusions-Creator**](https://github.com/EspressoCake/Defender-Exclusions-Creator-BOF)<br />
