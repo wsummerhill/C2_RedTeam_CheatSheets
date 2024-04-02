@@ -340,6 +340,32 @@ cEnumDefenderException add process NotMalicious.exe
 cEnumDefenderException add path C:\users\USERNAME\Downloads\ HOSTNAME.domain.local
 ``` 
 
+- [**SQL-BOF**](https://github.com/Tw1sm/SQL-BOF)<br />
+BOFs to interact with SQL servers without having to use .NET assemblies.
+```
+# Get info on a SQL server
+sql-info <SERVER>
+sql-links <SERVER> -> Enum linked servers
+
+# Exec commands on SQL server
+sql-whoami <SERVER> --> Gather logged in user, mapped user and roles
+sql-olecmd <SERVER> [command] [opt:database] --> Exec command via OLE automation procedures
+sql-xpcmd <SERVER> [command] [opt:database] --> Exec command via xp_cmdshell
+sql-agentcmd <SERVER> [command] [opt:database] --> Exec command via agent jobs
+
+# Exec custom SQL query
+sql-query <SERVER> [query] [opt:database]
+
+# Enum databases or columns on a server
+sql-databases <SERVER> [opt:database]
+sql-tables <SERVER> [opt:database]
+sql-columns <SERVER> TableName [opt:database]
+
+# Enable/disable xp_cmdshell
+sql-enablexp <SERVER>
+sql-disablexp <SERVER>
+```
+
 ---
 ### Miscellaneous
 - [**BOF Template**](https://github.com/Cobalt-Strike/bof_template)<br />
