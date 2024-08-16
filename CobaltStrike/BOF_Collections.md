@@ -61,7 +61,7 @@ inline-execute RegistryPersistence.o Remove --> Remove registry persistence
 ```
 
 - [**whereami**](https://github.com/boku7/whereami)<br />
-A "Where Am I" BOF which is a way to run the whoami.exe binary but in an opsec safe way by pulling the info from the current beacon process memory.<br />
+A "Where Am I" BOF which is a way to run the whoami.exe binary but in an opsec safe way by pulling the info from the current Beacon process memory.<br />
 Also pulls current environment variables.<br />
 ```whereami```
 
@@ -69,9 +69,8 @@ Also pulls current environment variables.<br />
 A useful BOF collection to perform various tasks in a safer opsec way.
 ```
 send_shellcode_via_pipe <pipe> <file> --> Send shellcode or any byte via a named pipe
-cat <file> --> Read file, supports remote shares
 wts_enum_remote_processes <host> --> Enumerate remote processes using WTS APIs
-unhook <module>, unhook ntdll.dll --> Use direct syscalls to unhook APIs of a specific DLL (works only on 64-bit beacons)
+unhook <module>, unhook ntdll.dll --> Use direct syscalls to unhook APIs of a specific DLL (works only on 64-bit Beacons)
 ```
 
 - [**Outflank C2 Tool Collection**](https://github.com/outflanknl/C2-Tool-Collection)<br />
@@ -91,6 +90,13 @@ Smbinfo <compuername> --> Get SMB info of remote system instead of using CS port
 Winver --> Shows the version of Windows that is running on the local system
 FindModule amsi.dll --> Identify processes which have a certain module loaded, i.e. winhttp.dll
 FindProcHandle lsass.exe -->  Identify processes with a specific process handle in use, i.e. lsass.exe
+PetitPotam [capture server ip or hostname] [target server ip or hostname] --> Coerce relayed auth to a target machine (or localhost)
+```
+
+- [**cobaltstrike-cat-bof**](https://github.com/tvgdb/cobaltstrike-cat-bof))<br />
+Simple BOF to `cat` a file on disk.<br />
+```
+cat <file>
 ```
 
 - [**tgtdelegation**](https://github.com/sliverarmory/tgtdelegation)<br />
@@ -126,7 +132,15 @@ enumfiles all --> Run all enumeration checks
 enumfiles lolbins --> Run only lolbins checks
 enumfiles browser-userdata --> Run only browser user data
 enumfiles remoting --> Run only remoting software checks
+enumfiles webservers --> Run only webserver checks
 ...
+```
+
+- [**xPipe**](https://github.com/boku7/xPipe)<br />
+Made by Bobby Cooke to list all active pipes on a local system and return their DACL permissions. Useful for finding pipe names to create similar pipes when using SMB Beacons.<br />
+```
+xpipe --> List all the pipes
+xpipe \\.\pipe\lsass --> List a specific pipe and show its owner & DACL permissions
 ```
 
 ---
@@ -142,7 +156,7 @@ Another alternative .NET executable loader to inject an assembly into a running 
 ```inject-assembly 0 /home/Rubeus.exe [args...]```
 
 - [**BOF.NET**](https://github.com/CCob/BOF.NET)<br />
-Critical tool for red teams that allows you to run .NET assemblies as BOFs within the beacon process<br />
+Critical tool for red teams that allows you to run .NET assemblies as BOFs within the Beacon process<br />
 ```
 bofnet_init --> Start BOF.NET
 bofnet_listassemblies --> List loaded .NET assemblies
