@@ -244,6 +244,21 @@ BOF that bypasses AMSI in a remote process with code injection<br />
 Inject ETW Bypass into Remote Process via Syscalls<br />
 ```injectEtwBypass <PID>```
 
+- [**BOF-patchit**](https://github.com/ScriptIdiot/BOF-patchit/)<br />
+A very easy solution to patch AMSI or ETW. Patches AMSI/ETW for the currently running x64 process.
+```
+patchit check --> List if AMSI or ETW are currently patched
+patchit all --> Patch both AMSI and ETW
+patchit amsi --> Only patch AMSI
+patchit etw --> Only patch ETW
+
+# DO NEFARIOUS STUFF HERE....
+
+patchit revertAll --> Revert both AMSI and ETW
+patchit revertAmsi --> Revert only AMSI
+patchit revertEtw --> Revert only ETW
+```
+
 - [**Kerberoast BOF**](https://github.com/cube0x0/BofRoast)<br />
 BOF for targeted Kerberoasting against input SPN to roast<br />
 Returns TGS that you can pass to apreq2hashcat.py (provided in repo) to output the hashcat format<br />
@@ -308,21 +323,6 @@ A clipboard add-on for Cobalt Strike to interact with the victim's clipboard. Wi
 dumpclip --> Dump current contents of clipboard
 set-clipboard-data --> Modify victims clipboard data
 clipmon --> Monitor the clipboard for new content and output to console
-```
-
-- [**BOF-patchit**](https://github.com/ScriptIdiot/BOF-patchit/)<br />
-A very easy solution to patch AMSI or ETW. Patches AMSI/ETW for the currently running x64 process.
-```
-patchit check --> List if AMSI or ETW are currently patched
-patchit all --> Patch both AMSI and ETW
-patchit amsi --> Only patch AMSI
-patchit etw --> Only patch ETW
-
-# DO NEFARIOUS STUFF HERE....
-
-patchit revertAll --> Revert both AMSI and ETW
-patchit revertAmsi --> Revert only AMSI
-patchit revertEtw --> Revert only ETW
 ```
 
 - [**ScreenshotBOF**](https://github.com/CodeXTF2/ScreenshotBOF)<br />
