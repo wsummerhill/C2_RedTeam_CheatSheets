@@ -380,6 +380,19 @@ sql-enablexp <SERVER>
 sql-disablexp <SERVER>
 ```
 
+- [**ChromeKatz**](https://github.com/Meckazin/ChromeKatz)<br />
+Cross-compiled BOFs and EXEs to dump browser cookies and credentials from Chromium-based browsers.<br />
+Load the CNA script or compile yourself and you're good to go!
+```
+# CredentialKatz-BOF
+credential-katz-find --> Find target browser processes supported
+credential-katz [chrome|edge] [PID] --> Dump browser credentials from credential manager using OpenProcess and ReadProcessMemory APIs
+
+# CookieKatz-BOF
+cookie-katz-find --> Find target browser processes supported
+cookie-katz [chrome|edge|webview] [pid] --> Dump browser Cookies using OpenProcess and ReadProcessMemory API
+```
+
 ---
 ### Miscellaneous
 - [**BOF Template**](https://github.com/Cobalt-Strike/bof_template)<br />
