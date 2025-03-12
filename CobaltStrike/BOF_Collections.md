@@ -176,6 +176,19 @@ bofnet_shutdown --> Kill BOF.NET
 ```
 
 ---
+### Executing Unmanaged PE Files
+
+- [**No-Consolation**](https://github.com/fortra/No-Consolation)<br />
+Use this BOF to execute unamanged PE files inside Beacon's memory and retrieve their output without allocating a console (i.e. without `conhost.exe`)<br />
+Supports 64 and 32 bits, supports EXEs and DLLs, doesn't create new processes or threats<br />
+```
+noconsolation /tmp/mimikatz.exe privilege::debug token::elevate exit --> Load and run a new PE in memory
+noconsolation --local C:\windows\system32\cmd.exe /c whoami --> Load a PE from the local machine
+noconsolation --list-pes --> List all PEs stored in memory
+noconsolation --unload-pe mimikatz.exe
+```
+
+---
 ### Exploitation
 
 - [**ajpc500 BOFs**](https://github.com/ajpc500/BOFs)<br />
