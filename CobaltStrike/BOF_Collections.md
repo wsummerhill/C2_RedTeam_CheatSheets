@@ -175,6 +175,13 @@ bofnet_executeassembly Seatbelt -group=remote --> SeatBelt execution example
 bofnet_shutdown --> Kill BOF.NET
 ```
 
+- [**Inline-EA**](https://github.com/EricEsquivel/Inline-EA)<br />
+BOF to execute .NET assemblies in process with added evasion features against popular EDRs<br />
+```
+inline-ea /path/to/Rubeus.exe triage --amsi --etw
+inline-ea /path/to/Powerpick.exe whoami /all --amsi --etw --patchexit
+```
+
 ---
 ### Executing Unmanaged PE Files
 
