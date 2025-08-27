@@ -424,6 +424,14 @@ Load the CNA and follow the instructions in the BOFs README, shown below:<br />
 2. Request a token on the target machine using the BOF: `aadprt [NONCE]`
 3. Use the token to authenticate in ROADrecon (or any other tool): `roadrecon auth --prt-cookie [TOKEN]`
 
+- [**ADSyncDump-BOF**](https://github.com/Paradoxis/ADSyncDump-BOF)<br />
+BOF version of Dirk-jan's Azure AD [adconnectdump](https://github.com/dirkjanm/adconnectdump) toolset.<br />
+Built for Cobalt Strike and Sliver.<br />
+```
+# Move laterally to the AD Sync Server and run the BOF as SYSTEM or the AD Sync account
+adsyncdump
+```
+
 ---
 ### Miscellaneous
 - [**BOF Template**](https://github.com/Cobalt-Strike/bof_template)<br />
