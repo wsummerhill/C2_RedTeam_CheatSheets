@@ -1,6 +1,12 @@
 # CobaltStrike BOF Collections
 Useful Cobalt Strike Beacon Object Files (BOFs) used during red teaming and penetration testing engagements.
 
+- [**Enumeration**](#enumeration)
+- [**Executing .NET Assemblies**](#executing-net-assemblies)
+- [**Executing Unmanaged PE Files**](#executing-unmanaged-pe-files)
+- [**Exploitation**](#exploitation)
+- [**Miscellaneous**](#miscellaneous)
+
 ---
 ### Enumeration
 
