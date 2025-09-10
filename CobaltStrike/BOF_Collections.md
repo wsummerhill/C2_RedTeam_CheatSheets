@@ -152,6 +152,15 @@ xpipe \\.\pipe\lsass --> List a specific pipe and show its owner & DACL permissi
 BOF to find detaile dprocess information such as: RWX process regions, .NET processes, signed binaries, etc.<br />
 ```safe_harbor```
 
+- [**msi-search**](https://github.com/mandiant/msi-search)<br />
+Mandiant tool to identify cached MSI (installer) files locally to identify potential privilege escalation vulnerabilities.<br />
+[Blog post link](https://cloud.google.com/blog/topics/threat-intelligence/privileges-third-party-windows-installers/)<br />
+```msi_search```
+
+- [EDRenum-BOF](https://github.com/mlcsec/EDRenum-BOF)<br />
+Simple BOF to identify common EDR processes, directories, and services.<br />
+```EDRenum```
+
 ---
 ### Executing .NET Assemblies
 
@@ -218,11 +227,18 @@ static_syscalls_inject <PID> <listener_name> / static_syscalls_shinject <PID> <p
 static_syscalls_dump <PID> [path_to_output] --> Process dump with syscalls (i.e. Dump LSASS!)
 ```
 
-- [Threadless Inject BOF](https://github.com/iilegacyyii/ThreadlessInject-BOF)
+- [**Threadless Inject BOF**](https://github.com/iilegacyyii/ThreadlessInject-BOF)<br />
 This process injection BOF has to be used by remotely hooking a function and specify which DLL/function you want to target for injecting shellcode into. <br />
 ```
 threadless-inject <pid> <dll> <export function> <shellcode path>
 threadless-inject 1234 ntdll.dll NtOpenFile shellcode.bin --> Inject into existing process
+```
+
+- [**PoolPartyBof**](https://github.com/0xEr3bus/PoolPartyBof)<br />
+Process injection BOF using the PoolParty technique from this [research by SafeBreach](https://www.safebreach.com/blog/process-injection-using-windows-thread-pools/) ([original C++ tool link](https://github.com/SafeBreach-Labs/PoolParty)).<br />
+```
+PoolPartyBof <Process-ID> <Path-To-Shellcode> <Variant>
+PoolPartyBof 2136 /tmp/beacon_x64.bin 4
 ```
   
 - [**MiniDumpWriteDump**](https://github.com/rookuu/BOFs)<br />
