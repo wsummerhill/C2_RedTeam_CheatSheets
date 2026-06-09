@@ -429,7 +429,7 @@ sql-disablexp <SERVER>
 Cross-compiled BOFs and EXEs to dump browser cookies and credentials from Chromium-based browsers.<br />
 Load the CNA script or compile yourself and you're good to go!
 ```
-# CredentialKatz-BOF
+# CredentialKatz-BOF - NOTE: This is currently deprecated now due to Chrome app-bound encryption
 credential-katz-find --> Find target browser processes supported
 credential-katz [chrome|edge] [PID] --> Dump browser credentials from credential manager using OpenProcess and ReadProcessMemory APIs
 
