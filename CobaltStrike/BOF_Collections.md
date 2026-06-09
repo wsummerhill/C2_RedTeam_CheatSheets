@@ -99,8 +99,8 @@ FindProcHandle lsass.exe -->  Identify processes with a specific process handle 
 PetitPotam [capture server ip or hostname] [target server ip or hostname] --> Coerce relayed auth to a target machine (or localhost)
 ```
 
-- [**cobaltstrike-cat-bof**](https://github.com/tvgdb/cobaltstrike-cat-bof))<br />
-Simple BOF to `cat` a file on disk.<br />
+- [**cobaltstrike-cat-bof**](https://github.com/tvgdb/cobaltstrike-cat-bof)<br />
+Simple BOF to read a file on disk.<br />
 ```
 cat <file>
 ```
@@ -362,7 +362,7 @@ krb_hash /password:PASSWORD [/user:USER] [/domain:DOMAIN] --> Generate RC4-hmac 
 krb_changepw /ticket:BASE64 /new:PASSWORD [/dc:DC] [/targetuser:USER] [/targetdomain:DOMAIN] --> Change current user password using MS kpasswd password change
 ```
 
-- [**Cobalt-Clip**](https://github.com/DallasFR/Cobalt-Clip)<br />
+- [**Cobalt-Clip**](https://github.com/ASkyeye/Cobalt-Clip)<br />
 A clipboard add-on for Cobalt Strike to interact with the victim's clipboard. With Cobalt-Clip you can dump, edit and monitor the content of a clipboard.<br />
 ```
 dumpclip --> Dump current contents of clipboard
