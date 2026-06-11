@@ -127,10 +127,10 @@ Continue to use ticket in memory with other tooling of your choice through SOCKS
 - [**PrivKit**](https://github.com/mertdas/PrivKit)<br />
 Windows privilege escalation BOF kit used for detecting priv esc vulnerabilities including unquoted service paths, hijackable paths, autologon registry keys, etc.<br />
 Check for all vulnerabilities supported: <br />
-```privcheck```
+```PrivCheck```
 
 - [**enumfiles BOF**](https://github.com/wsummerhill/BOF-enumfiles)<br />
-Simple BOF I developed in C++ to quickly enumerate local files of interest for post-exploitation. Useful to help find potential LOLbins, remoting software, browser or web server installations, etc.<br />
+Simple BOF I developed in C++ to quickly enumerate local files of interest for post-exploitation. Useful to help find potential LOLBins, remoting software, browser or web server installations, etc.<br />
 ```
 enumfiles show --> Dont run checks, just show all enumeration checks and files/folders supported
 enumfiles all --> Run all enumeration checks
@@ -149,7 +149,7 @@ xpipe \\.\pipe\lsass --> List a specific pipe and show its owner & DACL permissi
 ```
 
 - [**SafeHarbor-BOF**](https://github.com/ibaiC/SafeHarbor-BOF)<br />
-BOF to find detaile dprocess information such as: RWX process regions, .NET processes, signed binaries, etc.<br />
+BOF to find detailed process information such as: RWX process regions, .NET processes, signed binaries, etc.<br />
 ```safe_harbor```
 
 - [**msi-search**](https://github.com/mandiant/msi-search)<br />
