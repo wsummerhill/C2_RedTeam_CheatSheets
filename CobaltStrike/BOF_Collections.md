@@ -462,7 +462,7 @@ Used for creating your very own BOFs!
 - [**Cobalt Strike Blog: Simplifying BOF development**](https://www.cobaltstrike.com/blog/simplifying-bof-development)<br />
 BOFs in Cobalt Strike can now be written in C++ as of August, 2023.
 
-- [**BOF Hound**](https://github.com/fortalice/bofhound)<br />
+- [**BOFHound**](https://github.com/coffeegist/bofhound)<br />
 An offline BloodHound ingestor and LDAP parser to be used with TrustedSec's ["ldapsearch"](https://github.com/trustedsec/CS-Situational-Awareness-BOF).<br />
 Use ldapsearch in Cobalt Strike to gather data and then use bofhound on your CS logs to generate JSON files for importing into BloodHound.<br />
 ```bofhound -o /data/```
