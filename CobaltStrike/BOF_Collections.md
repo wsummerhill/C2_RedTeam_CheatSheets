@@ -459,6 +459,9 @@ adsyncdump
 - [**BOF Template**](https://github.com/Cobalt-Strike/bof_template)<br />
 Used for creating your very own BOFs!
 
+- [Visual Studio BOF template - bof-vs](https://github.com/Cobalt-Strike/bof-vs)<br />
+This repo contains the Beacon Object File Visual Studio (BOF-VS) template project.
+
 - [**Cobalt Strike Blog: Simplifying BOF development**](https://www.cobaltstrike.com/blog/simplifying-bof-development)<br />
 BOFs in Cobalt Strike can now be written in C++ as of August, 2023.
 
